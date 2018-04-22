@@ -1,5 +1,6 @@
 FROM anapsix/alpine-java:9_jre as jre9
 FROM tomcat:jre8-alpine as tomcat
+FROM huggla/alpine
 
 ENV JAVA_VERSION_MAJOR=8 \
     JAVA_VERSION_MINOR=172 \
