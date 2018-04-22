@@ -23,5 +23,13 @@ ENV LD_LIBRARY_PATH="$TOMCAT_NATIVE_LIBDIR"
 COPY --from=tomcat /usr/local/tomcat /usr/local/tomcat
 COPY --from=jre9 /opt /opt
 
+RUN runDeps="$( \
+		scanelf --needed --nobanner --format '%n#p' --recursive "$TOMCAT_NATIVE_LIBDIR" \
+			| tr ',' '\n' \
+			| sort -u \
+			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
+	)" \
+    && apk add $runDeps
+
 ENV REV_LINUX_USER="tomcat" \
     REV_param_JAVA_HOME="$JAVA_HOME"
