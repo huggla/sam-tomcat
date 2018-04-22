@@ -18,3 +18,9 @@ ENV JAVA_VERSION_MAJOR=8 \
     CATALINA_OUT=/dev/null
 ENV TOMCAT_NATIVE_LIBDIR="$CATALINA_HOME/native-jni-lib"
 ENV LD_LIBRARY_PATH="$TOMCAT_NATIVE_LIBDIR"
+
+COPY --from=tomcat /usr/local/tomcat /usr/local/tomcat
+COPY --from=jre9 /opt /opt
+
+ENV REV_LINUX_USER="tomcat" \
+    REV_param_JAVA_HOME="$JAVA_HOME"
