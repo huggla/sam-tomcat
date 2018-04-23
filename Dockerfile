@@ -2,24 +2,29 @@ FROM anapsix/alpine-java:9 as jre
 FROM tomcat:jre8-alpine as tomcat
 FROM huggla/alpine
 
-ENV JAVA_MAJOR="9" \
-    JAVA_HOME="/opt/jdk" \
-    PATH="${PATH}:/opt/jdk/bin:/usr/local/tomcat/bin" \
-    GLIBC_REPO="https://github.com/sgerrand/alpine-pkg-glibc" \
-    GLIBC_VERSION="2.27-r0" \
-    LANG="C.UTF-8" \
-    TOMCAT_MAJOR="9" \
-    TOMCAT_VERSION="9.0.7" \
-    TOMCAT_HOME="/usr/local/tomcat" \
-    CATALINA_HOME="/usr/local/tomcat" \
-    CATALINA_OUT="/dev/null"
-ENV TOMCAT_NATIVE_LIBDIR="$CATALINA_HOME/native-jni-lib"
-ENV LD_LIBRARY_PATH="$TOMCAT_NATIVE_LIBDIR"
+USER root
 
-COPY --from=tomcat /usr/local/tomcat /usr/local/tomcat
+ENV JAVA_MAJOR=9 \
+    JAVA_HOME=/opt/jdk \
+    PATH=${PATH}:/opt/jdk/bin:/usr/local/tomcat/bin \
+    TOMCAT_MAJOR=9 \
+    CATALINA_HOME=/usr/local/tomcat \
+    CATALINA_OUT=/dev/null
+ENV TOMCAT_NATIVE_LIBDIR="$CATALINA_HOME/native-jni-lib"
+ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$TOMCAT_NATIVE_LIBDIR"
+
+COPY ./bin ${BIN_DIR}
+COPY --from=tomcat ${CATALINA_HOME} ${CATALINA_HOME}
 COPY --from=jre /opt /opt
-COPY ./bin /usr/local/bin
+
+RUN apk add --no-cache libssl1.0
+# && chmod -R o= "$CATALINA_HOME" \
+# && chmod g+rx /bin /usr/bin \
+# && cd $CATALINA_HOME \
+# && find ./bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/bin/env sh|' '{}' +
 
 ENV REV_LINUX_USER="tomcat" \
     REV_param_JAVA_HOME="$JAVA_HOME" \
     REV_param_CATALINA_HOME="$CATALINA_HOME"
+
+USER sudoer
