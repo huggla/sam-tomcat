@@ -11,9 +11,11 @@ ENV JAVA_MAJOR=8 \
 ENV TOMCAT_NATIVE_LIBDIR="$CATALINA_HOME/native-jni-lib"
 ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$TOMCAT_NATIVE_LIBDIR"
 
+COPY ./bin /usr/local/bin
 COPY --from=tomcat /usr/local/tomcat /usr/local/tomcat
 COPY --from=jre /opt /opt
-COPY ./bin ${BIN_DIR}
+
+RUN find ./bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/bin/env sh|' '{}' +
 
 ENV REV_LINUX_USER="tomcat" \
     REV_param_JAVA_HOME="$JAVA_HOME" \
