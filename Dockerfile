@@ -22,7 +22,7 @@ ENV LD_LIBRARY_PATH="$TOMCAT_NATIVE_LIBDIR"
 
 COPY --from=tomcat /usr/local/tomcat /usr/local/tomcat
 COPY --from=jre /opt /opt
-COPY ./bin /usr/local/bin
+#COPY ./bin /usr/local/bin
 
 ENV REV_LINUX_USER="tomcat" \
     REV_param_JAVA_HOME="$JAVA_HOME" \
