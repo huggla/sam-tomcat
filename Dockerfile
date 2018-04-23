@@ -13,15 +13,12 @@ ENV JAVA_MAJOR=8 \
 ENV TOMCAT_NATIVE_LIBDIR="$CATALINA_HOME/native-jni-lib"
 ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$TOMCAT_NATIVE_LIBDIR"
 
+COPY ./bin ${BIN_DIR}
+COPY --from=tomcat ${CATALINA_HOME} ${CATALINA_HOME}
+COPY --from=jre /opt /opt
+
 RUN apk add --no-cache libssl1.0 \
- && mkdir -p $CATALINA_HOME /opt $BIN_DIR
-
-COPY ./bin/start.stage3 /usr/local/bin/start.stage3
-COPY ./bin/tomcat /usr/local/bin/tomcat
-COPY --from=tomcat /usr/local/tomcat /usr/local/tomcat/
-COPY --from=jre /opt /opt/
-
-RUN cd $CATALINA_HOME \
+ && cd $CATALINA_HOME \
  && find ./bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/bin/env sh|' '{}' +
 
 ENV REV_LINUX_USER="tomcat" \
