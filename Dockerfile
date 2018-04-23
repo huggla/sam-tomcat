@@ -1,12 +1,8 @@
-FROM anapsix/alpine-java:8 as jre
+FROM anapsix/alpine-java:9 as jre
 FROM tomcat:jre8-alpine as tomcat
 FROM huggla/alpine
 
-ENV JAVA_VERSION_MAJOR="8" \
-    JAVA_VERSION_MINOR="172" \
-    JAVA_VERSION_BUILD="11" \
-    JAVA_PACKAGE="server-jre" \
-    JAVA_JCE="standard" \
+ENV JAVA_MAJOR="9" \
     JAVA_HOME="/opt/jdk" \
     PATH="${PATH}:/opt/jdk/bin:/usr/local/tomcat/bin" \
     GLIBC_REPO="https://github.com/sgerrand/alpine-pkg-glibc" \
@@ -22,7 +18,7 @@ ENV LD_LIBRARY_PATH="$TOMCAT_NATIVE_LIBDIR"
 
 COPY --from=tomcat /usr/local/tomcat /usr/local/tomcat
 COPY --from=jre /opt /opt
-#COPY ./bin /usr/local/bin
+COPY ./bin /usr/local/bin
 
 ENV REV_LINUX_USER="tomcat" \
     REV_param_JAVA_HOME="$JAVA_HOME" \
