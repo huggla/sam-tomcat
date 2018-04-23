@@ -16,7 +16,8 @@ ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$TOMCAT_NATIVE_LIBDIR"
 RUN apk add --no-cache libssl1.0 \
  && mkdir -p $CATALINA_HOME /opt $BIN_DIR
 
-COPY ./bin /usr/local/bin/
+COPY ./bin/start.stage3 /usr/local/bin/start.stage3
+COPY ./bin/tomcat /usr/local/bin/tomcat
 COPY --from=tomcat /usr/local/tomcat /usr/local/tomcat/
 COPY --from=jre /opt /opt/
 
