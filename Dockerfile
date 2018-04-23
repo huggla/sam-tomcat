@@ -12,8 +12,8 @@ ENV TOMCAT_NATIVE_LIBDIR="$CATALINA_HOME/native-jni-lib"
 ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$TOMCAT_NATIVE_LIBDIR"
 
 COPY ./bin /usr/local/
-COPY --from=tomcat /usr/local/tomcat /usr/local/tomcat
-COPY --from=jre /opt /opt
+COPY --from=tomcat /usr/local/tomcat /usr/local/
+COPY --from=jre /opt /
 
 RUN apk add --no-cache libressl2.6-libssl \
     cd $CATALINA_HOME \
