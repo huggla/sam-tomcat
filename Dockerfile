@@ -1,4 +1,4 @@
-FROM anapsix/alpine-java:9 as jre9
+FROM anapsix/alpine-java:8_server-jre as jre
 FROM tomcat:jre8-alpine as tomcat
 FROM huggla/alpine
 
