@@ -18,7 +18,8 @@ RUN apk add --no-cache libssl1.0 \
  && chmod g+rx /bin /usr/bin \
  && cd $CATALINA_HOME \
  && find ./bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/bin/env sh|' '{}' + \
- && mv $CATALINA_HOME/native-jni-lib/* /usr/lib/
+ && mv $CATALINA_HOME/native-jni-lib/* /usr/lib/ \
+ && rm -rf $CATALINA_HOME/native-jni-lib
 
 ENV REV_LINUX_USER="tomcat" \
     REV_param_JAVA_HOME="$JAVA_HOME" \
