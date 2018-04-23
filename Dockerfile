@@ -15,9 +15,9 @@ COPY ./bin /usr/local/
 COPY --from=tomcat /usr/local/tomcat /usr/local/
 COPY --from=jre /opt /
 
-RUN apk add --no-cache libressl2.6-libssl \
- && cd $CATALINA_HOME \
- && find ./bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/bin/env sh|' '{}' +
+RUN apk add --no-cache libressl2.6-libssl
+# && cd $CATALINA_HOME \
+# && find ./bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/bin/env sh|' '{}' +
 
 ENV REV_LINUX_USER="tomcat" \
     REV_param_JAVA_HOME="$JAVA_HOME" \
