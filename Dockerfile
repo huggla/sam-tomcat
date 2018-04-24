@@ -23,6 +23,7 @@ RUN apk add --no-cache libssl1.0 libcrypto1.0 apr musl libjpeg-turbo libxau libb
 
 ENV REV_LINUX_USER="tomcat" \
     REV_param_JAVA_HOME="$JAVA_HOME" \
-    REV_param_CATALINA_HOME="$CATALINA_HOME"
+    REV_param_CATALINA_HOME="$CATALINA_HOME" \
+    REV_param_CATALINA_OPTS="-Xms128m -Xmx756M -XX:SoftRefLRUPolicyMSPerMB=36000"
 
 USER sudoer
