@@ -14,12 +14,12 @@ COPY --from=tomcat ${CATALINA_HOME} ${CATALINA_HOME}
 COPY --from=jre /opt /opt
 
 RUN apk add --no-cache libssl1.0 libcrypto1.0 apr musl libjpeg-turbo java-cacerts \
+ && mv $CATALINA_HOME/native-jni-lib/* /usr/lib/ \
+ && rm -rf $CATALINA_HOME/native-jni-lib \
  && chmod -R o= "$CATALINA_HOME" \
  && chmod g+rx /bin /usr/bin \
  && cd $CATALINA_HOME \
- && find ./bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/bin/env sh|' '{}' + \
- && mv $CATALINA_HOME/native-jni-lib/* /usr/lib/ \
- && rm -rf $CATALINA_HOME/native-jni-lib
+ && find ./bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/bin/env sh|' '{}' +
 
 ENV REV_LINUX_USER="tomcat" \
     REV_param_JAVA_HOME="$JAVA_HOME" \
