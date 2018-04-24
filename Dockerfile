@@ -13,7 +13,7 @@ COPY ./bin ${BIN_DIR}
 COPY --from=tomcat ${CATALINA_HOME} ${CATALINA_HOME}
 COPY --from=jre /opt /opt
 
-RUN apk add --no-cache libssl1.0 libcrypto1.0 apr musl \
+RUN apk add --no-cache libssl1.0 libcrypto1.0 apr musl libjpeg-turbo java-cacerts \
  && chmod -R o= "$CATALINA_HOME" \
  && chmod g+rx /bin /usr/bin \
  && cd $CATALINA_HOME \
