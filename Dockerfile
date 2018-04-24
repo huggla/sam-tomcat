@@ -13,7 +13,7 @@ COPY ./bin ${BIN_DIR}
 COPY --from=tomcat ${CATALINA_HOME} ${CATALINA_HOME}
 COPY --from=jre /opt /opt
 
-RUN apk add --no-cache libssl1.0 libcrypto1.0 apr musl libjpeg-turbo libxau libbsd libxdmcp libxcb libx11 libxcomposite libxext libxi libxrender libxtst alsa-lib libbz2 libpng freetype giflib krb5-conf libcom_err keyutils-libs libverto krb5-libs lcms2 nspr sqlite-libs nss pcsc-lite-libs lksctp-tools libuuid \
+RUN apk add --no-cache libssl1.0 libcrypto1.0 apr musl \
  && mv $CATALINA_HOME/native-jni-lib/* /usr/lib/ \
  && rm -rf $CATALINA_HOME/native-jni-lib \
  && chmod -R o= "$CATALINA_HOME" \
