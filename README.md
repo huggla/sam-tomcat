@@ -1,2 +1,2 @@
-# tomcat-oracle-jret2
+# tomcat-oracle
 V2
