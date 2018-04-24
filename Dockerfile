@@ -1,5 +1,5 @@
 FROM anapsix/alpine-java:9 as jre
-FROM tomcat:jre8-alpine as tomcat
+FROM tomcat:9.0.7-jre8-alpine as tomcat
 FROM huggla/alpine
 
 ENV JAVA_MAJOR=9 \
