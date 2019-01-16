@@ -1,6 +1,6 @@
 FROM anapsix/alpine-java:9 as jre
-FROM tomcat:9.0.7-jre8-alpine as tomcat
-FROM huggla/alpine
+FROM tomcat:9-jre8-alpine as tomcat
+FROM huggla/alpine-official as alpine
 
 ENV JAVA_MAJOR=9 \
     JAVA_HOME=/opt/jdk \
