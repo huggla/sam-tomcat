@@ -1,29 +1,35 @@
-FROM anapsix/alpine-java:9 as jre
-FROM tomcat:9-jre8-alpine as tomcat
-FROM huggla/alpine-official as alpine
+ARG TAG="20190115"
+ARG CONTENTIMAGE1="tomcat:9-jre8-alpine"
+ARG CONTENTSOURCE1="/usr/local/tomcat"
+ARG CONTENTDESTINATION1="$CONTENTSOURCE1"
+ARG CONTENTIMAGE2="anapsix/alpine-java:9"
+ARG CONTENTSOURCE2="/opt/jdk"
+ARG CONTENTDESTINATION2="$CONTENTSOURCE2"
+ARG MAKEDIRS="/usr/lib/"
+ARG RUNDEPS="libssl1.0 libcrypto1.0 apr musl"
+ARG BUILDCMDS=\
+"   mv $CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
+"&& rm -rf $CONTENTSOURCE1/native-jni-lib "\
+"&& chmod -R o= "$CONTENTSOURCE1" "\
+"&& find $CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' +"
 
-ENV JAVA_MAJOR=9 \
-    JAVA_HOME=/opt/jdk \
-    PATH=${PATH}:/opt/jdk/bin:/usr/local/tomcat/bin \
-    TOMCAT_MAJOR=9 \
-    CATALINA_HOME=/usr/local/tomcat \
-    CATALINA_OUT=/dev/null
+#---------------Don't edit----------------
+FROM ${CONTENTIMAGE1:-scratch} as content1
+FROM ${CONTENTIMAGE2:-scratch} as content2
+FROM ${INITIMAGE:-${BASEIMAGE:-huggla/base:$TAG}} as init
+FROM ${BUILDIMAGE:-huggla/build} as build
+FROM ${BASEIMAGE:-huggla/base:$TAG} as image
+ARG CONTENTDESTINATION1
+ARG CONTENTDESTINATION2
+COPY --from=build /imagefs /
+#-----------------------------------------
 
-COPY ./bin ${BIN_DIR}
-COPY --from=tomcat ${CATALINA_HOME} ${CATALINA_HOME}
-COPY --from=jre /opt /opt
+ENV VAR_LINUX_USER="tomcat" \
+    VAR_FINAL_COMMAND="JAVA_HOME=$CONTENTDESTINATION2 CATALINA_HOME=$CONTENTDESTINATION1 CATALINA_OPTS=\$VAR_CATALINA_OPTS JAVA_MAJOR=9 TOMCAT_MAJOR=9 CATALINA_OUT=\$VAR_CATALINA_OUT PATH="\$PATH:\$JAVA_HOME/bin:\$CATALINA_HOME/bin" $catalina.sh" \
+    VAR_CATALINA_OPTS="-Xms128m -Xmx756M -XX:SoftRefLRUPolicyMSPerMB=36000" \
+    VAR_CATALINA_OUT="/dev/null"
 
-RUN apk add --no-cache libssl1.0 libcrypto1.0 apr musl \
- && mv $CATALINA_HOME/native-jni-lib/* /usr/lib/ \
- && rm -rf $CATALINA_HOME/native-jni-lib \
- && chmod -R o= "$CATALINA_HOME" \
- && chmod g+rx /bin /usr/bin \
- && cd $CATALINA_HOME \
- && find ./bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/bin/env sh|' '{}' +
-
-ENV REV_LINUX_USER="tomcat" \
-    REV_param_JAVA_HOME="$JAVA_HOME" \
-    REV_param_CATALINA_HOME="$CATALINA_HOME" \
-    REV_param_CATALINA_OPTS="-Xms128m -Xmx756M -XX:SoftRefLRUPolicyMSPerMB=36000"
-
-USER sudoer
+#---------------Don't edit----------------
+USER starter
+ONBUILD USER root
+#-----------------------------------------
