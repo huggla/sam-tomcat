@@ -6,12 +6,12 @@ ARG CONTENTIMAGE2="anapsix/alpine-java:9"
 ARG CONTENTSOURCE2="/opt/jdk"
 ARG CONTENTDESTINATION2="/buildfs$CONTENTSOURCE2"
 ARG MAKEDIRS="/usr/lib/"
-ARG RUNDEPS="libssl1.0 libcrypto1.0 apr musl"
+ARG RUNDEPS="libressl2.7-libssl apr musl"
 ARG BUILDCMDS=\
-"   mv $CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
-"&& rm -rf $CONTENTSOURCE1/native-jni-lib "\
-"&& chmod -R o= "$CONTENTSOURCE1" "\
-"&& find $CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' +"
+"   mv /imagefs$CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
+"&& rm -rf /imagefs$CONTENTSOURCE1/native-jni-lib "\
+"&& chmod -R o= /imagefs$CONTENTSOURCE1 /imagefs$CONTENTSOURCE2 "\
+"&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' +"
 
 #---------------Don't edit----------------
 FROM ${CONTENTIMAGE1:-scratch} as content1
