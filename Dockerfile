@@ -11,7 +11,8 @@ ARG BUILDCMDS=\
 "   mv /imagefs$CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
 "&& rm -rf /imagefs$CONTENTSOURCE1/native-jni-lib "\
 "&& chmod -R o= /imagefs$CONTENTSOURCE1 /imagefs$CONTENTSOURCE2 "\
-"&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' +"
+"&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
+"&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/bin/env /usr/local/bin/dash|' '{}' +"
 
 #---------------Don't edit----------------
 FROM ${CONTENTIMAGE1:-scratch} as content1
