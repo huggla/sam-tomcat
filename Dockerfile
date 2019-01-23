@@ -6,7 +6,7 @@ ARG CONTENTIMAGE2="anapsix/alpine-java:9"
 ARG CONTENTSOURCE2="/opt/jdk"
 ARG CONTENTDESTINATION2="/buildfs$CONTENTSOURCE2"
 ARG MAKEDIRS="/usr/lib/"
-ARG RUNDEPS="libressl2.7-libssl apr libuuid"
+ARG RUNDEPS="libssl1.1 apr"
 ARG BUILDCMDS=\
 "   mv /imagefs$CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
 "&& rm -rf /imagefs$CONTENTSOURCE1/native-jni-lib "\
