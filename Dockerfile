@@ -6,7 +6,7 @@ ARG CONTENTIMAGE2="anapsix/alpine-java:9"
 ARG CONTENTSOURCE2="/opt/jdk"
 ARG CONTENTDESTINATION2="/buildfs$CONTENTSOURCE2"
 ARG MAKEDIRS="/usr/lib/"
-ARG RUNDEPS="libressl2.7-libssl apr musl"
+ARG RUNDEPS="libressl2.7-libssl apr musl libuuid"
 ARG BUILDCMDS=\
 "   mv /imagefs$CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
 "&& rm -rf /imagefs$CONTENTSOURCE1/native-jni-lib "\
@@ -32,7 +32,7 @@ COPY --from=build /imagefs /
 #-----------------------------------------
 
 ENV VAR_LINUX_USER="tomcat" \
-    VAR_FINAL_COMMAND="JAVA_HOME=\"$CONTENTSOURCE2\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=9 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" PATH=\"\$PATH:/usr/local/bin:$CONTENTSOURCE2/bin:$CONTENTSOURCE1/bin\" catalina.sh" \
+    VAR_FINAL_COMMAND="JAVA_HOME=\"$CONTENTSOURCE2\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=9 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" PATH=\"\$PATH:/usr/local/bin:$CONTENTSOURCE2/bin:$CONTENTSOURCE1/bin\" catalina.sh run" \
     VAR_CATALINA_OPTS="-Xms128m -Xmx756M -XX:SoftRefLRUPolicyMSPerMB=36000" \
     VAR_CATALINA_OUT="/dev/null"
 
