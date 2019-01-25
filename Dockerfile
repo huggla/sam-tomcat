@@ -13,6 +13,7 @@ ARG BUILDCMDS=\
 "&& chmod -R o= /imagefs$CONTENTSOURCE1 /imagefs$CONTENTSOURCE2 "\
 "&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/bin/env /usr/local/bin/dash|' '{}' +"
+ARG REMOVEFILES="/usr/local/tomcat/webapps/examples"
 
 #---------------Don't edit----------------
 FROM ${CONTENTIMAGE1:-scratch} as content1
