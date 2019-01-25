@@ -6,11 +6,12 @@ ARG CONTENTIMAGE2="anapsix/alpine-java:9"
 ARG CONTENTSOURCE2="/opt/jdk"
 ARG CONTENTDESTINATION2="/buildfs$CONTENTSOURCE2"
 ARG MAKEDIRS="/usr/lib/"
-ARG RUNDEPS="libssl1.1 apr"
+ARG RUNDEPS="tomcat-native"
+ARG EXCLUDEAPKS="openjdk8-jre-base"
 ARG BUILDDEPS="rsync"
 ARG BUILDCMDS=\
-"   rsync -r --ignore-existing /imagefs$CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
-"&& rm -rf /imagefs$CONTENTSOURCE1/native-jni-lib "\
+#"   rsync -r --ignore-existing /imagefs$CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
+"rm -rf /imagefs$CONTENTSOURCE1/native-jni-lib "\
 "&& chmod -R o= /imagefs$CONTENTSOURCE1 /imagefs$CONTENTSOURCE2 "\
 "&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/bin/env /usr/local/bin/dash|' '{}' +"
