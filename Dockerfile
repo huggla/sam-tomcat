@@ -8,6 +8,7 @@ ARG CONTENTDESTINATION2="/buildfs$CONTENTSOURCE2"
 ARG MAKEDIRS="/usr/lib/"
 ARG RUNDEPS="tomcat-native"
 ARG EXCLUDEAPKS="openjdk8-jre-base"
+ARG EXCLUDEDEPS="openjdk8-jre-base"
 ARG BUILDDEPS="rsync"
 ARG BUILDCMDS=\
 #"   rsync -r --ignore-existing /imagefs$CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
