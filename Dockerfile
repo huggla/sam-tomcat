@@ -8,7 +8,7 @@ ARG CONTENTDESTINATION2="/buildfs$CONTENTSOURCE2"
 ARG MAKEDIRS="/usr/lib/"
 ARG RUNDEPS="libssl1.1 apr"
 ARG BUILDCMDS=\
-"   mv /imagefs$CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
+"   rsync -r --ignore-existing /imagefs$CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
 "&& rm -rf /imagefs$CONTENTSOURCE1/native-jni-lib "\
 "&& chmod -R o= /imagefs$CONTENTSOURCE1 /imagefs$CONTENTSOURCE2 "\
 "&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
