@@ -7,6 +7,7 @@ ARG CONTENTSOURCE2="/opt/jdk"
 ARG CONTENTDESTINATION2="/buildfs$CONTENTSOURCE2"
 ARG MAKEDIRS="/usr/lib/"
 ARG RUNDEPS="libssl1.1 apr"
+ARG BUILDDEPS="rsync"
 ARG BUILDCMDS=\
 "   rsync -r --ignore-existing /imagefs$CONTENTSOURCE1/native-jni-lib/* /imagefs/usr/lib/ "\
 "&& rm -rf /imagefs$CONTENTSOURCE1/native-jni-lib "\
