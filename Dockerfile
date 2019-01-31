@@ -11,6 +11,7 @@ ARG EXCLUDEAPKS="openjdk8-jre-base"
 ARG EXCLUDEDEPS="openjdk8-jre-base"
 ARG BUILDCMDS=\
 "   rm -rf /imagefs$CONTENTSOURCE1/native-jni-lib "\
+"&& mkdir -p /imagefs$CONTENTSOURCE1/conf/Catalina "\
 "&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& chmod -R g=rwX /imagefs$CONTENTSOURCE1/logs /imagefs$CONTENTSOURCE1/temp /imagefs$CONTENTSOURCE1/work"
