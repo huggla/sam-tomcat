@@ -1,7 +1,7 @@
-**Note! I use Docker latest tag for development, which means that it isn't allways working. Date tags are stable.**
-
 # tomcat-oracle
-Tomcat and Oracle jre on Alpine.
+Tomcat and Oracle JRE on Alpine.
+
+20190129: Tomcat 9.0.14, Oracle JRE 9.
 
 ## Capabilities
-Can drop all but CHOWN, SETGID and SETUID.
+Can drop all but SETPCAP, SETGID and SETUID.
