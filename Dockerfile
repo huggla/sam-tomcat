@@ -15,7 +15,7 @@ ARG BUILDCMDS=\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& chmod -R g=rwX '/imagefs$CONTENTSOURCE1/logs' '/imagefs$CONTENTSOURCE1/temp' '/imagefs$CONTENTSOURCE1/work'"
-ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh"
+ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh $CONTENTSOURCE2/bin/java"
 ARG REMOVEFILES="/usr/local/tomcat/webapps/examples"
 
 #--------Generic template (don't edit)--------
