@@ -13,7 +13,7 @@ ARG BUILDCMDS=\
 "   rm -rf /imagefs$CONTENTSOURCE1/native-jni-lib "\
 "&& chmod -R o= /imagefs$CONTENTSOURCE1 /imagefs$CONTENTSOURCE2 "\
 "&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
-"&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/bin/env /usr/local/bin/dash|' '{}' +"
+"&& find /imagefs$CONTENTSOURCE1/bin/ -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' +"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh"
 ARG REMOVEFILES="/usr/local/tomcat/webapps/examples"
 
