@@ -15,7 +15,7 @@ ARG BUILDCMDS=\
 "&& chmod -R g=rwX '/imagefs$CONTENTSOURCE1/logs' '/imagefs$CONTENTSOURCE1/temp' '/imagefs$CONTENTSOURCE1/work' "\
 "&& cp -a /imagefs$CONTENTSOURCE2/lib /imagefs/usr/local/"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh $CONTENTSOURCE2/bin/java"
-ARG REMOVEFILES="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/native-jni-lib $CONTENTSOURCE2"
+ARG REMOVEFILES="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/native-jni-lib $CONTENTSOURCE2 /usr/local/tomcat/*.md /usr/local/tomcat/*.txt /usr/local/tomcat/include"
 
 #--------Generic template (don't edit)--------
 FROM ${CONTENTIMAGE1:-scratch} as content1
