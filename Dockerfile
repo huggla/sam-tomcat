@@ -16,7 +16,7 @@ ARG BUILDCMDS=\
 "&& cp -a /imagefs$CONTENTSOURCE2/lib /imagefs/usr/local/"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh $CONTENTSOURCE2/bin/java"
 ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs $CONTENTSOURCE1/native-jni-lib $CONTENTSOURCE1/include $CONTENTSOURCE2"
-ARG REMOVEFILES="$CONTENTSOURCE1/*"
+ARG REMOVEFILES="$CONTENTSOURCE1/* $CONTENTSOURCE1/bin/commons-daemon*"
 
 #--------Generic template (don't edit)--------
 FROM ${CONTENTIMAGE1:-scratch} as content1
