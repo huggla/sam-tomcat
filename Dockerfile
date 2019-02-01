@@ -5,7 +5,7 @@ ARG CONTENTDESTINATION1="/buildfs$CONTENTSOURCE1"
 ARG CONTENTIMAGE2="anapsix/alpine-java:9"
 ARG CONTENTSOURCE2="/opt/jdk"
 ARG CONTENTDESTINATION2="/buildfs$CONTENTSOURCE2"
-ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina"
+ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina/localhost"
 ARG RUNDEPS="tomcat-native"
 ARG EXCLUDEAPKS="openjdk8-jre-base"
 ARG EXCLUDEDEPS="openjdk8-jre-base"
@@ -13,9 +13,9 @@ ARG BUILDCMDS=\
 "   find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& chmod -R g=rwX '/imagefs$CONTENTSOURCE1/logs' '/imagefs$CONTENTSOURCE1/temp' '/imagefs$CONTENTSOURCE1/work' "\
-"&& cp -a /imagefs$CONTENTSOURCE2/lib/libjava.so /imagefs$CONTENTSOURCE2/lib/jli /imagefs/usr/local/lib/"
+"&& cp -a /imagefs$CONTENTSOURCE2/lib /imagefs/usr/local/"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh $CONTENTSOURCE2/bin/java"
-ARG REMOVEFILES="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/native-jni-lib"
+ARG REMOVEFILES="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/native-jni-lib $CONTENTSOURCE2"
 
 #--------Generic template (don't edit)--------
 FROM ${CONTENTIMAGE1:-scratch} as content1
