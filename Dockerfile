@@ -12,14 +12,12 @@ ARG EXCLUDEDEPS="openjdk8-jre-base"
 ARG BUILDCMDS=\
 "   find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
-"&& mv '/imagefs$CONTENTSOURCE1/logs' '/imagefs$CONTENTSOURCE1/temp' '/imagefs$CONTENTSOURCE1/work' '/tmp/tomcat/' "\
-"&& ln -s /tmp/tomcat/* '/imagefs$CONTENTSOURCE1/' "\
-"&& mkdir '/tmp/tomcat/conf.Catalina.localhost' "\
-"&& ln -s '/tmp/tomcat/conf.Catalina.localhost' '$CONTENTSOURCE1/conf/Catalina/localhost' "\
-"&& cp -a /imagefs$CONTENTSOURCE2/lib /imagefs/usr/local/"
+"&& mv '/imagefs$CONTENTSOURCE1/temp' '/tmp/tomcat/' "\
+"&& ln -s '/tmp/tomcat/temp' '/imagefs$CONTENTSOURCE1/' "\
+"&& cp -a '/imagefs$CONTENTSOURCE2/lib' '/imagefs/usr/local/'"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh $CONTENTSOURCE2/bin/java"
-ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs $CONTENTSOURCE1/native-jni-lib $CONTENTSOURCE1/include $CONTENTSOURCE2"
-ARG REMOVEFILES="$CONTENTSOURCE1/* $CONTENTSOURCE1/bin/commons-daemon*"
+ARG REMOVEDIRS="'$CONTENTSOURCE1/webapps/examples' '$CONTENTSOURCE1/webapps/docs' '$CONTENTSOURCE1/native-jni-lib' '$CONTENTSOURCE2'"
+ARG REMOVEFILES="'$CONTENTSOURCE1/*' '$CONTENTSOURCE1/bin/commons-daemon*'"
 
 #--------Generic template (don't edit)--------
 FROM ${CONTENTIMAGE1:-scratch} as content1
@@ -47,6 +45,9 @@ ENV VAR_STARTUPEXECUTABLES="$STARTUPEXECUTABLES"
 #---------------------------------------------
 
 ENV VAR_LINUX_USER="tomcat" \
+    VAR_CONFIG_DIR="/etc/tomcat" \
+    VAR_WEBAPPS_DIR="/webapps" \
+    VAR_WORK_DIR="/usr/local/tomcat/work" \
     VAR_FINAL_COMMAND="JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=9 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
     VAR_CATALINA_OPTS="-Xms128m -Xmx756M -XX:SoftRefLRUPolicyMSPerMB=36000" \
     VAR_CATALINA_OUT="/dev/null"
