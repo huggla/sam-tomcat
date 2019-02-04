@@ -14,7 +14,7 @@ ARG BUILDCMDS=\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& cp -a '/imagefs$CONTENTSOURCE2/lib' '/imagefs/usr/local/'"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh $CONTENTSOURCE2/bin/java"
-ARG REMOVEDIRS="'$CONTENTSOURCE1/webapps/examples' '$CONTENTSOURCE1/webapps/docs' '$CONTENTSOURCE1/native-jni-lib' '$CONTENTSOURCE2'"
+ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs $CONTENTSOURCE1/native-jni-lib $CONTENTSOURCE2"
 ARG REMOVEFILES="$CONTENTSOURCE1/* $CONTENTSOURCE1/bin/commons-daemon*"
 
 #--------Generic template (don't edit)--------
