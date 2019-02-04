@@ -48,6 +48,7 @@ ENV VAR_LINUX_USER="tomcat" \
     VAR_CONFIG_DIR="/etc/tomcat" \
     VAR_WEBAPPS_DIR="/webapps" \
     VAR_WORK_DIR="/usr/local/tomcat/work" \
+    VAR_LOGS_DIR="/usr/local/tomcat/logs" \
     VAR_FINAL_COMMAND="JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=9 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
     VAR_CATALINA_OPTS="-Xms128m -Xmx756M -XX:SoftRefLRUPolicyMSPerMB=36000" \
     VAR_CATALINA_OUT="/dev/null"
