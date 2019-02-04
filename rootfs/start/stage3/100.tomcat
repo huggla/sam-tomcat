@@ -5,3 +5,15 @@
 # VAR_*
 # All functions in /start/functions
 
+if [ "$isFirstRun" == "true" ]
+then
+   if [ "$VAR_CONFIG_DIR" != "/usr/local/tomcat/conf" ]
+   then
+      set +f
+      if [ ! -s "$VAR_CONFIG_DIR" ]
+      then
+         cp -a /usr/local/tomcat/conf/* "$VAR_CONFIG_DIR/"*
+      fi
+      rm -rf /usr/local/tomcat/conf
+      ln -s "$VAR_CONFIG_DIR" /usr/local/tomcat/
+   fi
