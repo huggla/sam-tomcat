@@ -12,8 +12,6 @@ ARG EXCLUDEDEPS="openjdk8-jre-base"
 ARG BUILDCMDS=\
 "   find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
-"&& mv '/imagefs$CONTENTSOURCE1/temp' '/tmp/tomcat/' "\
-"&& ln -s '/tmp/tomcat/temp' '/imagefs$CONTENTSOURCE1/' "\
 "&& cp -a '/imagefs$CONTENTSOURCE2/lib' '/imagefs/usr/local/'"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh $CONTENTSOURCE2/bin/java"
 ARG REMOVEDIRS="'$CONTENTSOURCE1/webapps/examples' '$CONTENTSOURCE1/webapps/docs' '$CONTENTSOURCE1/native-jni-lib' '$CONTENTSOURCE2'"
@@ -49,6 +47,7 @@ ENV VAR_LINUX_USER="tomcat" \
     VAR_WEBAPPS_DIR="/webapps" \
     VAR_WORK_DIR="/usr/local/tomcat/work" \
     VAR_LOGS_DIR="/usr/local/tomcat/logs" \
+    VAR_TEMP_DIR="/tmp" \
     VAR_FINAL_COMMAND="JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=9 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
     VAR_CATALINA_OPTS="-Xms128m -Xmx756M -XX:SoftRefLRUPolicyMSPerMB=36000" \
     VAR_CATALINA_OUT="/dev/null"
