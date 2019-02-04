@@ -1,0 +1,7 @@
+# Set in stage2:
+# ---------------------------------------------------------
+# set -e +a +m +s +i -f
+# isFirstRun
+# VAR_*
+# All functions in /start/functions
+
