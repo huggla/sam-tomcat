@@ -15,7 +15,7 @@ ARG BUILDCMDS=\
 "&& find '/imagefs$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -exec rm -rf "{}" + "\
 "&& cp -a '/imagefs$CONTENTSOURCE2/lib' '/imagefs/usr/local/'"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh $CONTENTSOURCE2/bin/java"
-ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs $CONTENTSOURCE1/native-jni-lib $CONTENTSOURCE2"
+ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs $CONTENTSOURCE1/native-jni-lib $CONTENTSOURCE2 /usr/share"
 ARG REMOVEFILES="$CONTENTSOURCE1/bin/commons-daemon*"
 
 #--------Generic template (don't edit)--------
