@@ -13,10 +13,11 @@ ARG BUILDCMDS=\
 "   find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -exec rm -rf "{}" + "\
+"&& chmod -R g=rwX,o= $CONTENTSOURCE1/webapps $CONTENTSOURCE1/work $CONTENTSOURCE1/temp $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf "\
 "&& cp -a '/imagefs$CONTENTSOURCE2/lib' '/imagefs/usr/local/'"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh $CONTENTSOURCE2/bin/java"
 ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs $CONTENTSOURCE1/native-jni-lib $CONTENTSOURCE2"
-ARG REMOVEFILES="$CONTENTSOURCE1/bin/commons-daemon*"
+ARG REMOVEFILES="$CONTENTSOURCE1/bin/commons-daemon* $CONTENTSOURCE1/temp/*"
 
 #--------Generic template (don't edit)--------
 FROM ${CONTENTIMAGE1:-scratch} as content1
