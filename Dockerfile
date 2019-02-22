@@ -1,4 +1,4 @@
-ARG TAG="20190206"
+ARG TAG="20190220"
 ARG CONTENTIMAGE1="tomcat:9-jre8-alpine"
 ARG CONTENTSOURCE1="/usr/local/tomcat"
 ARG CONTENTDESTINATION1="/buildfs$CONTENTSOURCE1"
@@ -13,8 +13,8 @@ ARG BUILDCMDS=\
 "   find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -exec rm -rf "{}" + "\
-"&& chmod -R g=rwX,o= /imagefs$CONTENTSOURCE1/webapps /imagefs$CONTENTSOURCE1/work /imagefs$CONTENTSOURCE1/temp /imagefs$CONTENTSOURCE1/logs /imagefs$CONTENTSOURCE1/conf "\
 "&& cp -a '/imagefs$CONTENTSOURCE2/lib' '/imagefs/usr/local/'"
+ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/webapps $CONTENTSOURCE1/work $CONTENTSOURCE1/temp $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh $CONTENTSOURCE2/bin/java"
 ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs $CONTENTSOURCE1/native-jni-lib $CONTENTSOURCE2"
 ARG REMOVEFILES="$CONTENTSOURCE1/bin/commons-daemon* $CONTENTSOURCE1/temp/*"
@@ -40,7 +40,11 @@ ARG MAKEFILES
 ARG EXECUTABLES
 ARG STARTUPEXECUTABLES
 ARG EXPOSEFUNCTIONS
+ARG GID0WRITABLES
+ARG GID0WRITABLESRECURSIVE
+ARG LINUXUSEROWNED
 COPY --from=build /imagefs /
+RUN [ -n "$LINUXUSEROWNED" ] && chown 102 $LINUXUSEROWNED || true
 #---------------------------------------------
 
 ENV VAR_LINUX_USER="tomcat" \
