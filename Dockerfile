@@ -8,12 +8,10 @@ ARG BUILDCMDS=\
 "   find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -exec rm -rf "{}" + "\
-"&& rm -rf /imagefs/usr/lib/jvm/java-1.8-openjdk/bin /imagefs/usr/lib/jvm/java-1.8-openjdk/lib "\
-"&& cd /imagefs/usr/lib/jvm/java-1.8-openjdk "\
-"&& ln -s jre/bin jre/lib ./"
+"&& cp -a /imagefs/usr/lib/jvm/java-1.8-openjdk/jre/lib /imagefs/usr/local/"
 ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/webapps $CONTENTSOURCE1/work $CONTENTSOURCE1/temp $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
-ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs $CONTENTSOURCE1/native-jni-lib"
+ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs $CONTENTSOURCE1/native-jni-lib /usr/lib/jvm"
 ARG REMOVEFILES="$CONTENTSOURCE1/bin/commons-daemon* $CONTENTSOURCE1/temp/* /usr/lib/jvm/java-1.8-openjdk/jre/*"
 
 #--------Generic template (don't edit)--------
@@ -45,7 +43,7 @@ RUN [ -n "$LINUXUSEROWNED" ] && chown 102 $LINUXUSEROWNED || true
 #---------------------------------------------
 
 ENV VAR_LINUX_USER="tomcat" \
-    VAR_FINAL_COMMAND="JAVA_HOME=\"/usr/lib/jvm/java-1.8-openjdk\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
+    VAR_FINAL_COMMAND="JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
     VAR_CONFIG_DIR="/etc/tomcat" \
     VAR_WEBAPPS_DIR="/webapps" \
     VAR_WORK_DIR="/usr/local/tomcat/work" \
