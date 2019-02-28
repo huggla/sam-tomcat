@@ -8,6 +8,7 @@ ARG CONTENTDESTINATION2="/buildfs$CONTENTSOURCE2"
 ARG CONTENTIMAGE3="huggla/tomcat-native:1.2.21"
 ARG CONTENTSOURCE3="/tomcat-native"
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat"
+ARG RUNDEPS="apr"
 ARG BUILDCMDS=\
 "   find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
