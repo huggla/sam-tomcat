@@ -1,5 +1,5 @@
 # tomcat-oracle
-Tomcat on Alpine.
+Tomcat on Alpine (Openjdk-jre alt. Oracle-jre).
 
 20190129-20190206: Tomcat 9.0.14, Oracle JRE 9.
 
