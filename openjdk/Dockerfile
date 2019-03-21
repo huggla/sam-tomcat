@@ -49,8 +49,9 @@ COPY --from=build /imagefs /
 RUN [ -n "$LINUXUSEROWNED" ] && chown 102 $LINUXUSEROWNED || true
 #---------------------------------------------
 
-ENV VAR_LINUX_USER="tomcat" \
-    VAR_FINAL_COMMAND="JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
+ENV CATALINA_HOME="$CONTENTSOURCE1" \
+    VAR_LINUX_USER="tomcat" \
+    VAR_FINAL_COMMAND="JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CATALINA_HOME\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
     VAR_CONFIG_DIR="/etc/tomcat" \
     VAR_WEBAPPS_DIR="/webapps" \
     VAR_WORK_DIR="/usr/local/tomcat/work" \
