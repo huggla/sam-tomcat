@@ -1,7 +1,7 @@
-ARG TAG="20190220"
+ARG TAG="20190327"
 ARG DESTDIR="/tomcat-native"
 
-FROM huggla/alpine-official as alpine
+FROM huggla/alpine as alpine
 
 ARG BUILDDEPS="build-base apr-dev chrpath openjdk8 openssl-dev"
 ARG VERSION="1.2.21"
