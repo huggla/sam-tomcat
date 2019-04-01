@@ -13,4 +13,5 @@ then
    replaceDirWithLink "/usr/local/tomcat/temp" "$VAR_TEMP_DIR"
    tryMakeDir "$VAR_WEBAPPS_DIR" write
    replaceDirWithLink "/usr/local/tomcat/webapps" "$VAR_WEBAPPS_DIR"
+   chmod -R ug=rwX "$VAR_CONFIG_DIR" "$VAR_LOGS_DIR" "$VAR_WORK_DIR" "$VAR_TEMP_DIR" "$VAR_WEBAPPS_DIR"
 fi
