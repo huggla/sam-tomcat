@@ -15,5 +15,5 @@ then
       replaceDirWithLink "/usr/local/tomcat/work" "$VAR_WORK_DIR"
       replaceDirWithLink "/usr/local/tomcat/temp" "$VAR_TEMP_DIR"
       replaceDirWithLink "/usr/local/tomcat/webapps" "$VAR_WEBAPPS_DIR"
-   eof'
+eof'
 fi
