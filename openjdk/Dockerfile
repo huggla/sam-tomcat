@@ -52,7 +52,18 @@ ARG GID0WRITABLESRECURSIVE
 ARG LINUXUSEROWNED
 ARG LINUXUSEROWNEDRECURSIVE
 COPY --from=build /imagefs /
-RUN ( chown 102 $LINUXUSEROWNED; xargs -a "/environment/linuxuserownedrecursive" chown -R 102; true ) 2>/dev/null
+RUN set -f; \
+    while read file; \
+    do \
+       set +f; \
+       find "$(dirname "$file")" -name "$(basename "$file")" ! -user 102 -maxdepth 1 -exec chown 102 "{}" +; \
+    done </environment/linuxuserowned; \
+    set -f; \
+    while read dir; \
+    do \
+       set +f; \
+       find "$dir" ! -user 102 -exec chown 102 "{}" +; \
+    done </environment/linuxuserownedrecursive
 #---------------------------------------------
 
 ENV VAR_LINUX_USER="tomcat" \
