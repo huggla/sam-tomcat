@@ -52,8 +52,7 @@ ARG GID0WRITABLESRECURSIVE
 ARG LINUXUSEROWNED
 ARG LINUXUSEROWNEDRECURSIVE
 COPY --from=build /imagefs /
-RUN chown 102 $LINUXUSEROWNED; \
-    xargs -a "/environment/linuxuserownedrecursive" chown -R 102
+RUN ( chown 102 $LINUXUSEROWNED; xargs -a "/environment/linuxuserownedrecursive" chown -R 102; true ) 2>/dev/null
 #---------------------------------------------
 
 ENV VAR_LINUX_USER="tomcat" \
