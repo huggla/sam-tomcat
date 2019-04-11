@@ -8,7 +8,7 @@
 if [ "$isFirstRun" == "true" ]
 then
    tryMakeDir "$VAR_WEBAPPS_DIR" write
-   if [ ! -s "$VAR_WEBAPPS_DIR" ]
+   if [ -s "$VAR_WEBAPPS_DIR" ]
    then
       if [ "$VAR_WITH_MANAGERS" == "false" ]
       then
