@@ -63,6 +63,7 @@ ENV VAR_LINUX_USER="tomcat" \
     VAR_TEMP_DIR="/tmp/tomcat" \
     VAR_CATALINA_OPTS="-Xms128m -Xmx756M -XX:SoftRefLRUPolicyMSPerMB=36000" \
     VAR_CATALINA_OUT="/dev/null"
+    VAR_WITH_MANAGERS="true"
 
 #--------Generic template (don't edit)--------
 USER starter
