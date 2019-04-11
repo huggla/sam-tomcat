@@ -24,9 +24,11 @@ then
    elif [ -d "$VAR_ROOT_APP" ]
    then
       if [ ! -e "$VAR_WEBAPPS_DIR/ROOT" ] || ( [ -l "$VAR_WEBAPPS_DIR/ROOT" ] && [ ! "$VAR_WEBAPPS_DIR/ROOT" -ef "$VAR_ROOT_APP" ] )
-      cd "$VAR_WEBAPPS_DIR"
-      ln -sf "$VAR_ROOT_APP" ROOT
-      cd /
+      then
+         cd "$VAR_WEBAPPS_DIR"
+         ln -sf "$VAR_ROOT_APP" ROOT
+         cd /
+      fi
    fi
    replaceDirWithLink "/usr/local/tomcat/conf" "$VAR_CONFIG_DIR"
    replaceDirWithLink "/usr/local/tomcat/logs" "$VAR_LOGS_DIR"
