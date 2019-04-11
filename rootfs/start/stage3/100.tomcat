@@ -14,19 +14,11 @@ then
       then
          rm -rf /usr/local/tomcat/webapps/ROOT /usr/local/tomcat/webapps/manager /usr/local/tomcat/webapps/host-manager
       fi
-      if [ -d "$VAR_ROOT_APP" ]
+      if [ -d "/usr/local/tomcat/webapps/$VAR_ROOT_APP" ]
       then
-         rm -rf /usr/local/tomcat/webapps/ROOT
          cd /usr/local/tomcat/webapps
-         ln -s "$VAR_ROOT_APP" ROOT
-         cd /
-      fi
-   elif [ -d "$VAR_ROOT_APP" ]
-   then
-      if [ ! -e "$VAR_WEBAPPS_DIR/ROOT" ] || ( [ -l "$VAR_WEBAPPS_DIR/ROOT" ] && [ ! "$VAR_WEBAPPS_DIR/ROOT" -ef "$VAR_ROOT_APP" ] )
-      then
-         cd "$VAR_WEBAPPS_DIR"
-         ln -sf "$VAR_ROOT_APP" ROOT
+         rm -rf ROOT
+         mv "$VAR_ROOT_APP" ROOT
          cd /
       fi
    fi
