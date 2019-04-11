@@ -8,15 +8,24 @@
 if [ "$isFirstRun" == "true" ]
 then
    tryMakeDir "$VAR_WEBAPPS_DIR" write
-   if [ ! -s "$VAR_WEBAPPS_DIR" ] && [ "$VAR_WITH_MANAGERS" == "false" ]
+   if [ ! -s "$VAR_WEBAPPS_DIR" ]
    then
-      rm -rf /usr/local/tomcat/webapps/ROOT /usr/local/tomcat/webapps/manager /usr/local/tomcat/webapps/host-manager
-   fi
-   if [ -n "$VAR_ROOT_APP" ]
+      if [ "$VAR_WITH_MANAGERS" == "false" ]
+      then
+         rm -rf /usr/local/tomcat/webapps/ROOT /usr/local/tomcat/webapps/manager /usr/local/tomcat/webapps/host-manager
+      fi
+      if [ -d "$VAR_ROOT_APP" ]
+      then
+         rm -rf /usr/local/tomcat/webapps/ROOT
+         cd /usr/local/tomcat/webapps
+         ln -s "$VAR_ROOT_APP" ROOT
+         cd /
+      fi
+   elif [ -d "$VAR_ROOT_APP" ]
    then
-      rm -rf /usr/local/tomcat/webapps/ROOT
-      cd /usr/local/tomcat/webapps
-      ln -s "$VAR_ROOT_APP" ROOT
+      if [ ! -e "$VAR_WEBAPPS_DIR/ROOT" ] || ( [ -l "$VAR_WEBAPPS_DIR/ROOT" ] && [ ! "$VAR_WEBAPPS_DIR/ROOT" -ef "$VAR_ROOT_APP" ] )
+      cd "$VAR_WEBAPPS_DIR"
+      ln -sf "$VAR_ROOT_APP" ROOT
       cd /
    fi
    replaceDirWithLink "/usr/local/tomcat/conf" "$VAR_CONFIG_DIR"
