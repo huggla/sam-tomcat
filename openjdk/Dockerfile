@@ -10,8 +10,9 @@ ARG BUILDCMDS=\
 "   find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -exec rm -rf "{}" + "\
-"&& cp -a /imagefs/usr/lib/jvm/java-1.8-openjdk/jre/lib /imagefs/usr/local/ "\
-"&& cp -a /imagefs/usr/lib/jvm/java-1.8-openjdk/jre/bin/java /imagefs/usr/local/bin/"
+"&& mv /imagefs/usr/lib/jvm/java-1.8-openjdk/jre/lib /imagefs/usr/local/ "\
+"&& cd /imagefs/usr/lib/jvm/java-1.8-openjdk/jre "\
+"&& ln -s ../../../../local/lib lib"
 ARG GID0WRITABLES="$CONTENTSOURCE1"
 ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/webapps $CONTENTSOURCE1/work $CONTENTSOURCE1/temp $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh /usr/local/bin/java"
