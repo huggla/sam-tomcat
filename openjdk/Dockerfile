@@ -6,6 +6,7 @@ ARG CONTENTIMAGE2="huggla/tomcat-native:1.2.21"
 ARG CONTENTSOURCE2="/tomcat-native"
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat"
 ARG RUNDEPS="openjdk8-jre-base apr nss"
+ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG BUILDCMDS=\
 "   find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
 "&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
