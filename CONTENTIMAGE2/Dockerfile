@@ -1,4 +1,4 @@
-ARG TAG="20190327"
+ARG TAG="20190418"
 ARG DESTDIR="/tomcat-native"
 
 FROM huggla/alpine as alpine
