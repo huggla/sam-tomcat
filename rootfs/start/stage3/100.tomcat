@@ -14,7 +14,7 @@ then
       then
          rm -rf /usr/local/tomcat/webapps/ROOT /usr/local/tomcat/webapps/manager /usr/local/tomcat/webapps/host-manager
       fi
-      if [ -d "/usr/local/tomcat/webapps/$VAR_ROOT_APP" ]
+      if [ -n "$VAR_ROOT_APP" ] && [ -d "/usr/local/tomcat/webapps/$VAR_ROOT_APP" ]
       then
          cd /usr/local/tomcat/webapps
          mv "$VAR_ROOT_APP" ROOT
