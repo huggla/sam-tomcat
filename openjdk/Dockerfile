@@ -50,13 +50,15 @@ COPY --from=build /imagefs /
 #---------------------------------------------
 
 ENV VAR_LINUX_USER="tomcat" \
-    VAR_FINAL_COMMAND="LD_LIBRARY_PATH=\"$CONTENTSOURCE1/native-jni-lib\" JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
+    VAR_FINAL_COMMAND="LD_LIBRARY_PATH=\"$CONTENTSOURCE1/native-jni-lib\" JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"-Xms\$VAR_MIN_MEM -Xmx\$VAR_MAX_MEM \$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
     VAR_CONFIG_DIR="/etc/tomcat" \
     VAR_WEBAPPS_DIR="/webapps" \
     VAR_WORK_DIR="$CONTENTSOURCE1/work" \
     VAR_LOGS_DIR="$CONTENTSOURCE1/logs" \
     VAR_TEMP_DIR="/tmp/tomcat" \
-    VAR_CATALINA_OPTS="-Xms128m -Xmx756M -XX:SoftRefLRUPolicyMSPerMB=36000" \
+    VAR_MIN_MEM="128M" \
+    VAR_MAX_MEM="1024M" \
+    VAR_CATALINA_OPTS="-XX:SoftRefLRUPolicyMSPerMB=36000" \
     VAR_CATALINA_OUT="/dev/null" \
     VAR_WITH_MANAGERS="true"
 
