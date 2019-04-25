@@ -36,4 +36,4 @@ FROM huggla/busybox:$TAG as image
  
 ARG DESTDIR
 
-COPY --from=alpine $DESTDIR* /./
+COPY --from=alpine $DESTDIR* $DESTDIR/
