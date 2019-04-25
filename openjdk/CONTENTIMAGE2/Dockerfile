@@ -1,5 +1,5 @@
 ARG TAG="20190418"
-ARG DESTDIR="/libjpegturbo"
+ARG DESTDIR="/copy-src/libjpegturbo"
 
 FROM huggla/alpine as alpine
 
@@ -36,4 +36,4 @@ FROM huggla/busybox:$TAG as image
  
 ARG DESTDIR
 
-COPY --from=alpine $DESTDIR* $DESTDIR/
+COPY --from=alpine /copy-src /
