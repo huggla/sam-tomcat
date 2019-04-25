@@ -1,20 +1,24 @@
 ARG TAG="20190418"
-ARG CONTENTIMAGE2="tomcat:9-jre8-alpine"
-ARG CONTENTSOURCE2="/usr/local/tomcat"
-ARG CONTENTDESTINATION2="/buildfs$CONTENTSOURCE2"
-ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE2/conf/Catalina /tmp/tomcat"
+ARG CONTENTIMAGE1="tomcat:9-jre8-alpine"
+ARG CONTENTSOURCE1="/usr/local/tomcat"
+ARG CONTENTDESTINATION1="/buildfs$CONTENTSOURCE1"
+ARG LIBJPEGTURBO_VERSION="2.0.2"
+ARG CONTENTIMAGE2="huggla/libjpegturbo:$LIBJPEGTURBO_VERSION"
+ARG CONTENTSOURCE2="/libjpegturbo/usr/lib/libturbojpeg.so.0.2.0"
+ARG CONTENTDESTINATION2="/imagefs/usr/lib/libturbojpeg.so"
+ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat"
 ARG RUNDEPS="openjdk8-jre-base apr nss"
 ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG BUILDCMDS=\
-"   find '/imagefs$CONTENTSOURCE2/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
-"&& find '/imagefs$CONTENTSOURCE2/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
-"&& find '/imagefs$CONTENTSOURCE2' ! -name LICENSE ! -type d -maxdepth 1 -exec rm -rf "{}" + "\
+"   find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
+"&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
+"&& find '/imagefs$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -exec rm -rf "{}" + "\
 "&& mv /imagefs/usr/lib/jvm/java-1.8-openjdk/jre/lib /imagefs/usr/local/"
-ARG GID0WRITABLES="$CONTENTSOURCE2"
-ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE2/webapps $CONTENTSOURCE2/work $CONTENTSOURCE2/temp $CONTENTSOURCE2/logs $CONTENTSOURCE2/conf"
-ARG STARTUPEXECUTABLES="$CONTENTSOURCE2/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
-ARG REMOVEDIRS="$CONTENTSOURCE2/webapps/examples $CONTENTSOURCE2/webapps/docs /usr/lib/jvm"
-ARG REMOVEFILES="$CONTENTSOURCE2/bin/commons-daemon* $CONTENTSOURCE2/temp/*"
+ARG GID0WRITABLES="$CONTENTSOURCE1"
+ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/webapps $CONTENTSOURCE1/work $CONTENTSOURCE1/temp $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
+ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
+ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs /usr/lib/jvm"
+ARG REMOVEFILES="$CONTENTSOURCE1/bin/commons-daemon* $CONTENTSOURCE1/temp/*"
 
 #--------Generic template (don't edit)--------
 FROM ${CONTENTIMAGE1:-scratch} as content1
@@ -50,11 +54,11 @@ COPY --from=build /imagefs /
 #---------------------------------------------
 
 ENV VAR_LINUX_USER="tomcat" \
-    VAR_FINAL_COMMAND="LD_LIBRARY_PATH=\"$CONTENTSOURCE2/native-jni-lib\" JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE2\" CATALINA_OPTS=\"-Xms\$VAR_MIN_MEM -Xmx\$VAR_MAX_MEM \$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
+    VAR_FINAL_COMMAND="LD_LIBRARY_PATH=\"$CONTENTSOURCE1/native-jni-lib\" JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"-Xms\$VAR_MIN_MEM -Xmx\$VAR_MAX_MEM \$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
     VAR_CONFIG_DIR="/etc/tomcat" \
     VAR_WEBAPPS_DIR="/webapps" \
-    VAR_WORK_DIR="$CONTENTSOURCE2/work" \
-    VAR_LOGS_DIR="$CONTENTSOURCE2/logs" \
+    VAR_WORK_DIR="$CONTENTSOURCE1/work" \
+    VAR_LOGS_DIR="$CONTENTSOURCE1/logs" \
     VAR_TEMP_DIR="/tmp/tomcat" \
     VAR_MIN_MEM="128M" \
     VAR_MAX_MEM="1024M" \
