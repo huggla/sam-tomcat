@@ -24,10 +24,16 @@ RUN apk add $BUILDDEPS \
        -DCMAKE_C_FLAGS="$CFLAGS" \
        -DWITH_JAVA=1 \
  && make \
- && make install
+ && make install \
+ && mkdir -p $DESTDIR-dev/usr/lib $DESTDIR-doc/usr/share $DESTDIR-java/usr/share $DESTDIR-utils/usr \
+ && mv $DESTDIR/usr/include $DESTDIR-dev/usr/ \
+ && mv $DESTDIR/usr/lib/*.a $DESTDIR/usr/lib/pkgconfig $DESTDIR-dev/usr/lib/ \
+ && mv $DESTDIR/usr/share/doc $DESTDIR/usr/share/man $DESTDIR-doc/usr/share/ \
+ && mv $DESTDIR/usr/share/java $DESTDIR-java/usr/share/ \
+ && mv $DESTDIR/usr/bin $DESTDIR-utils/usr/
  
 FROM huggla/busybox:$TAG as image
  
 ARG DESTDIR
 
-COPY --from=alpine $DESTDIR $DESTDIR
+COPY --from=alpine $DESTDIR* /
