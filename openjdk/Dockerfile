@@ -1,4 +1,4 @@
-ARG TAG="20190418"
+ARG TAG="20190801"
 ARG CONTENTIMAGE1="tomcat:9-jre8-alpine"
 ARG CONTENTSOURCE1="/usr/local/tomcat"
 ARG CONTENTDESTINATION1="/buildfs$CONTENTSOURCE1"
@@ -9,12 +9,12 @@ ARG CONTENTDESTINATION2="/imagefs/"
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat"
 ARG RUNDEPS="openjdk8-jre-base apr nss"
 ARG EXCLUDEAPKS="libjpeg-turbo"
-ARG BUILDCMDS=\
-"   find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
-"&& find '/imagefs$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
-"&& find '/imagefs$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -exec rm -rf "{}" + "\
-"&& mv /imagefs/usr/lib/jvm/java-1.8-openjdk/jre/lib /imagefs/usr/local/ "\
-"&& mv /imagefs/usr/share/java/*.jar /imagefs/usr/local/lib/"
+ARG FINALCMDS=\
+"   find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
+"&& find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
+"&& find '$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -exec rm -rf "{}" + "\
+"&& mv /usr/lib/jvm/java-1.8-openjdk/jre/lib /usr/local/ "\
+"&& mv /usr/share/java/*.jar /usr/local/lib/"
 ARG GID0WRITABLES="$CONTENTSOURCE1"
 ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/webapps $CONTENTSOURCE1/work $CONTENTSOURCE1/temp $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
@@ -27,19 +27,19 @@ FROM ${CONTENTIMAGE2:-scratch} as content2
 FROM ${CONTENTIMAGE3:-scratch} as content3
 FROM ${INITIMAGE:-${BASEIMAGE:-huggla/base:$TAG}} as init
 FROM ${BUILDIMAGE:-huggla/build} as build
-FROM ${BASEIMAGE:-huggla/base:$TAG} as image
+FROM ${BASEIMAGE:-huggla/base:$TAG} as final
 ARG CONTENTSOURCE1
 ARG CONTENTSOURCE1="${CONTENTSOURCE1:-/}"
 ARG CONTENTDESTINATION1
-ARG CONTENTDESTINATION1="${CONTENTDESTINATION1:-/buildfs/}"
+ARG CONTENTDESTINATION1="${CONTENTDESTINATION1:-/}"
 ARG CONTENTSOURCE2
 ARG CONTENTSOURCE2="${CONTENTSOURCE2:-/}"
 ARG CONTENTDESTINATION2
-ARG CONTENTDESTINATION2="${CONTENTDESTINATION2:-/buildfs/}"
+ARG CONTENTDESTINATION2="${CONTENTDESTINATION2:-/}"
 ARG CONTENTSOURCE3
 ARG CONTENTSOURCE3="${CONTENTSOURCE3:-/}"
 ARG CONTENTDESTINATION3
-ARG CONTENTDESTINATION3="${CONTENTDESTINATION3:-/buildfs/}"
+ARG CONTENTDESTINATION3="${CONTENTDESTINATION3:-/}"
 ARG CLONEGITSDIR
 ARG DOWNLOADSDIR
 ARG MAKEDIRS
@@ -51,7 +51,7 @@ ARG GID0WRITABLES
 ARG GID0WRITABLESRECURSIVE
 ARG LINUXUSEROWNED
 ARG LINUXUSEROWNEDRECURSIVE
-COPY --from=build /imagefs /
+COPY --from=build /finalfs /
 #---------------------------------------------
 
 ENV VAR_LINUX_USER="tomcat" \
