@@ -1,10 +1,15 @@
-ARG TAG="20190802"
+# =========================================================================
+# Init
+# =========================================================================
+# ARGs (can be passed to Build/Final) <BEGIN>
+ARG TAG="20190902"
+ARG IMAGETYPE="application"
 ARG CONTENTIMAGE1="tomcat:9-jre8-alpine"
 ARG CONTENTSOURCE1="/usr/local/tomcat"
 ARG CONTENTDESTINATION1="/finalfs$CONTENTSOURCE1"
 ARG LIBJPEGTURBO_VERSION="2.0.2"
-ARG CONTENTIMAGE2="huggla/libjpegturbo:$LIBJPEGTURBO_VERSION"
-ARG CONTENTSOURCE2="/libjpegturbo"
+ARG CONTENTIMAGE2="huggla/libjpegturbo-content:$LIBJPEGTURBO_VERSION"
+ARG CONTENTSOURCE2="/content-app"
 ARG CONTENTDESTINATION2="/finalfs/"
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat"
 ARG RUNDEPS="openjdk8-jre-base apr nss"
@@ -20,39 +25,31 @@ ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/webapps $CONTENTSOURCE1/work $CONTEN
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
 ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs $CONTENTSOURCE1/include /usr/lib/jvm"
 ARG REMOVEFILES="$CONTENTSOURCE1/bin/commons-daemon* $CONTENTSOURCE1/temp/*"
+# ARGs (can be passed to Build/Final) </END>
 
-#--------Generic template (don't edit)--------
+# Generic template (don't edit) <BEGIN>
 FROM ${CONTENTIMAGE1:-scratch} as content1
 FROM ${CONTENTIMAGE2:-scratch} as content2
 FROM ${CONTENTIMAGE3:-scratch} as content3
+FROM ${CONTENTIMAGE4:-scratch} as content4
 FROM ${INITIMAGE:-${BASEIMAGE:-huggla/base:$TAG}} as init
-FROM ${BUILDIMAGE:-huggla/build} as build
+# Generic template (don't edit) </END>
+
+# =========================================================================
+# Build
+# =========================================================================
+# Generic template (don't edit) <BEGIN>
+FROM ${BUILDIMAGE:-huggla/build:$TAG} as build
 FROM ${BASEIMAGE:-huggla/base:$TAG} as final
-ARG CONTENTSOURCE1
-ARG CONTENTSOURCE1="${CONTENTSOURCE1:-/}"
-ARG CONTENTDESTINATION1
-ARG CONTENTDESTINATION1="${CONTENTDESTINATION1:-/}"
-ARG CONTENTSOURCE2
-ARG CONTENTSOURCE2="${CONTENTSOURCE2:-/}"
-ARG CONTENTDESTINATION2
-ARG CONTENTDESTINATION2="${CONTENTDESTINATION2:-/}"
-ARG CONTENTSOURCE3
-ARG CONTENTSOURCE3="${CONTENTSOURCE3:-/}"
-ARG CONTENTDESTINATION3
-ARG CONTENTDESTINATION3="${CONTENTDESTINATION3:-/}"
-ARG CLONEGITSDIR
-ARG DOWNLOADSDIR
-ARG MAKEDIRS
-ARG MAKEFILES
-ARG EXECUTABLES
-ARG STARTUPEXECUTABLES
-ARG EXPOSEFUNCTIONS
-ARG GID0WRITABLES
-ARG GID0WRITABLESRECURSIVE
-ARG LINUXUSEROWNED
-ARG LINUXUSEROWNEDRECURSIVE
 COPY --from=build /finalfs /
-#---------------------------------------------
+# Generic template (don't edit) </END>
+
+# =========================================================================
+# Final
+# =========================================================================
+# ARGs passed from Init <BEGIN>
+ARG CONTENTSOURCE1
+# ARGs passed from Init </END>
 
 ENV VAR_LINUX_USER="tomcat" \
     VAR_FINAL_COMMAND="LD_LIBRARY_PATH=\"$CONTENTSOURCE1/native-jni-lib\" JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"-Xms\$VAR_MIN_MEM -Xmx\$VAR_MAX_MEM \$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
@@ -67,7 +64,7 @@ ENV VAR_LINUX_USER="tomcat" \
     VAR_CATALINA_OUT="/dev/null" \
     VAR_WITH_MANAGERS="true"
 
-#--------Generic template (don't edit)--------
+# Generic template (don't edit) <BEGIN>
 USER starter
 ONBUILD USER root
-#---------------------------------------------
+# Generic template (don't edit) </END>
