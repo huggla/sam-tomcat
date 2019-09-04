@@ -3,7 +3,7 @@
 # =========================================================================
 # ARGs (can be passed to Build/Final) <BEGIN>
 ARG TAG="20190902"
-ARG IMAGETYPE="application"
+ARG IMAGETYPE="application,base"
 ARG CONTENTIMAGE1="tomcat:9-jre8-alpine"
 ARG CONTENTSOURCE1="/usr/local/tomcat"
 ARG CONTENTDESTINATION1="/finalfs$CONTENTSOURCE1"
