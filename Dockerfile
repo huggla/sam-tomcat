@@ -10,16 +10,17 @@ ARG CONTENTDESTINATION1="/finalfs$CONTENTSOURCE1"
 ARG LIBJPEGTURBO_VERSION="2.0.2"
 ARG CONTENTIMAGE2="huggla/libjpegturbo-content:$LIBJPEGTURBO_VERSION"
 ARG CONTENTSOURCE2="/content-app"
-ARG CONTENTDESTINATION2="/finalfs/"
+ARG CONTENTDESTINATION2="/finalfs/content-app/"
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat"
 ARG RUNDEPS="openjdk8-jre-base apr nss"
-ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG FINALCMDS=\
-"   find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash$|#!/usr/local/bin/dash|' '{}' + "\
-"&& find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash$|#!/usr/local/bin/dash|' '{}' + "\
-"&& find '$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -exec rm -rf "{}" + "\
+"   find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash\$|#!/usr/local/bin/dash|' '{}' \; "\
+"&& find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash\$|#!/usr/local/bin/dash|' '{}' \; "\
+"&& find '$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
 "&& mv /usr/lib/jvm/java-1.8-openjdk/jre/lib /usr/local/ "\
-"&& mv /usr/share/java/*.jar /usr/local/lib/"
+"&& mv /usr/share/java/*.jar /usr/local/lib/ "\
+"&& find /content-app/* -maxdepth 0 ! -name '*.gz' -exec cp -a '{}' / \; "\
+"&& rm -rf /content-app"
 ARG GID0WRITABLES="$CONTENTSOURCE1"
 ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/webapps $CONTENTSOURCE1/work $CONTENTSOURCE1/temp $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
