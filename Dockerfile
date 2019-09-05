@@ -18,8 +18,8 @@ ARG FINALCMDS=\
 "&& find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash\$|#!/usr/local/bin/dash|' '{}' \; "\
 "&& find '$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
 "&& mv /usr/lib/jvm/java-1.8-openjdk/jre/lib /usr/local/ "\
-"&& mv /usr/share/java/*.jar /usr/local/lib/ "\
-"&& find /content-app/* -maxdepth 0 ! -name '*.gz' -exec cp -a '{}' / \; "\
+'&& mv /usr/share/java/*.jar /usr/local/lib/ '\
+'&& find /content-app/ -mindepth 1 -maxdepth 1 ! -name "*.gz" -exec cp -a "{}" / \; '\
 "&& rm -rf /content-app"
 ARG GID0WRITABLES="$CONTENTSOURCE1"
 ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/webapps $CONTENTSOURCE1/work $CONTENTSOURCE1/temp $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
