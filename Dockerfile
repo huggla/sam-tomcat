@@ -53,15 +53,16 @@ ARG CONTENTSOURCE1
 # ARGs passed from Init </END>
 
 ENV VAR_LINUX_USER="tomcat" \
-    VAR_FINAL_COMMAND="LD_LIBRARY_PATH=\"$CONTENTSOURCE1/native-jni-lib\" JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"-Xms\$VAR_MIN_MEM -Xmx\$VAR_MAX_MEM \$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
+    VAR_FINAL_COMMAND="LD_LIBRARY_PATH=\"$CONTENTSOURCE1/native-jni-lib\" JAVA_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_BASE=\"$CONTENTSOURCE1\" CATALINA_OPTS=\"-Xms\$VAR_MIN_MEM -Xmx\$VAR_MAX_MEM \$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" catalina.sh run" \
     VAR_CONFIG_DIR="/etc/tomcat" \
+    VAR_PREFS_DIR="$VAR_CONFIG_DIR/prefs" \
     VAR_WEBAPPS_DIR="/webapps" \
     VAR_WORK_DIR="$CONTENTSOURCE1/work" \
     VAR_LOGS_DIR="$CONTENTSOURCE1/logs" \
     VAR_TEMP_DIR="/tmp/tomcat" \
     VAR_MIN_MEM="128M" \
     VAR_MAX_MEM="1024M" \
-    VAR_CATALINA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Dfile.encoding=UTF8 -Duser.timezone=GMT -Djavax.servlet.request.encoding=UTF-8 -Djavax.servlet.response.encoding=UTF-8 -Duser.timezone=GMT -Dorg.geotools.shapefile.datetime=true -server -Xrs -XX:PerfDataSamplingInterval=500 -Dorg.geotools.referencing.forceXY=true -XX:SoftRefLRUPolicyMSPerMB=36000 -XX:NewRatio=2 -XX:+CMSClassUnloadingEnabled" \
+    VAR_CATALINA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Dfile.encoding=UTF8 -Duser.timezone=GMT -Djavax.servlet.request.encoding=UTF-8 -Djavax.servlet.response.encoding=UTF-8 -Duser.timezone=GMT -Dorg.geotools.shapefile.datetime=true -server -Xrs -XX:PerfDataSamplingInterval=500 -Dorg.geotools.referencing.forceXY=true -XX:SoftRefLRUPolicyMSPerMB=36000 -XX:NewRatio=2 -XX:+CMSClassUnloadingEnabled -Djava.util.prefs.userRoot=\"\$VAR_PREFS_DIR/.userPrefs\" -Djava.util.prefs.systemRoot=\"\$VAR_PREFS_DIR\"" \
     VAR_CATALINA_OUT="/dev/null" \
     VAR_WITH_MANAGERS="true"
 
