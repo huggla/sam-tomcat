@@ -9,6 +9,7 @@ if [ "$isFirstRun" == "true" ]
 then
    tryMakeDir "$VAR_WEBAPPS_DIR" write
    eval "VAR_PREFS_DIR=\"$VAR_PREFS_DIR\""
+   eval "VAR_CATALINA_OPTS=\"$VAR_CATALINA_OPTS\""
    tryMakeDir "$VAR_PREFS_DIR/.systemPrefs" write
    tryMakeDir "$VAR_PREFS_DIR/.userPrefs" write
    if [ -s "$VAR_WEBAPPS_DIR" ]
