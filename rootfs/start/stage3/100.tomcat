@@ -8,6 +8,8 @@
 if [ "$isFirstRun" == "true" ]
 then
    tryMakeDir "$VAR_WEBAPPS_DIR" write
+   tryMakeDir "$VAR_PREFS_DIR/.systemPrefs" write
+   tryMakeDir "$VAR_PREFS_DIR/.userPrefs" write
    if [ -s "$VAR_WEBAPPS_DIR" ]
    then
       if [ "$VAR_WITH_MANAGERS" == "false" ]
