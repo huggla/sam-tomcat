@@ -13,7 +13,7 @@ then
    tryMakeDir "$VAR_PREFS_DIR/.systemPrefs" write
    tryMakeDir "$VAR_PREFS_DIR/.userPrefs" write
    sed -i "s|appBase=\"webapps\"|appBase=\"$VAR_WEBAPPS_DIR\"|g" /usr/local/tomcat/conf/server.xml
-   linkContents="$(ls -A "$link" | sed 's/.snapshot\>//' | sed "s/\<$ignore\>//" | xargs)"
+   linkContents="$(ls -A "$VAR_WEBAPPS_DIR" | sed 's/.snapshot\>//' | xargs)"
    if [ -z "$linkContents" ]
    then
       if [ "$VAR_WITH_MANAGERS" == "false" ]
