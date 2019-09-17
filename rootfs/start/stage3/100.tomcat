@@ -12,7 +12,8 @@ then
    eval "VAR_CATALINA_OPTS=\"$VAR_CATALINA_OPTS\""
    tryMakeDir "$VAR_PREFS_DIR/.systemPrefs" write
    tryMakeDir "$VAR_PREFS_DIR/.userPrefs" write
-   if [ -s "$VAR_WEBAPPS_DIR" ]
+   linkContents="$(ls -A "$link" | sed 's/.snapshot\>//' | sed "s/\<$ignore\>//" | xargs)"
+   if [ -z "$linkContents" ]
    then
       if [ "$VAR_WITH_MANAGERS" == "false" ]
       then
