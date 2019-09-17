@@ -10,6 +10,5 @@ then
    replaceDirWithLink "/usr/local/tomcat/conf" "$VAR_CONFIG_DIR" "prefs"
    replaceDirWithLink "/usr/local/tomcat/logs" "$VAR_LOGS_DIR"
    replaceDirWithLink "/usr/local/tomcat/work" "$VAR_WORK_DIR"
-   replaceDirWithLink "/usr/local/tomcat/temp" "$VAR_TEMP_DIR"
    replaceDirWithLink "/usr/local/tomcat/webapps" "$VAR_WEBAPPS_DIR"
 fi
