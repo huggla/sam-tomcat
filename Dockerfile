@@ -11,6 +11,7 @@ ARG LIBJPEGTURBO_VERSION="2.0.2"
 ARG CONTENTIMAGE2="huggla/libjpegturbo-content:$LIBJPEGTURBO_VERSION"
 ARG CONTENTSOURCE2="/content-app"
 ARG CONTENTDESTINATION2="/finalfs/content-app/"
+ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat"
 ARG RUNDEPS="openjdk8-jre-base apr nss"
 ARG FINALCMDS=\
