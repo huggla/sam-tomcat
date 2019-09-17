@@ -61,7 +61,6 @@ ENV VAR_LINUX_USER="tomcat" \
     VAR_CONFIG_DIR="/etc/tomcat" \
     VAR_PREFS_DIR="\$VAR_CONFIG_DIR/prefs" \
     VAR_WEBAPPS_DIR="/webapps" \
-    VAR_WORK_DIR="$CONTENTSOURCE1/work" \
     VAR_TEMP_DIR="/tmp/tomcat" \
     VAR_MIN_MEM="128M" \
     VAR_MAX_MEM="1024M" \
