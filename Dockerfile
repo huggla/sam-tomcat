@@ -23,8 +23,8 @@ ARG FINALCMDS=\
 "&& find '$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
 "&& cd /usr/local/lib "\
 '&& ln -s ../../lib/jvm/java-1.8-openjdk/jre/lib/* ../tomcat/native-jni-lib/* ../../share/java/*.jar ./ '\
-'&& cd /var '\
-'&& ln -sf ../usr/local/tomcat/logs log'
+'&& cd /var/log '\
+'&& ln -s ../../usr/local/tomcat/logs tomcat'
 ARG GID0WRITABLES="$CONTENTSOURCE1"
 ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/webapps $CONTENTSOURCE1/work $CONTENTSOURCE1/temp $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
@@ -62,7 +62,6 @@ ENV VAR_LINUX_USER="tomcat" \
     VAR_PREFS_DIR="\$VAR_CONFIG_DIR/prefs" \
     VAR_WEBAPPS_DIR="/webapps" \
     VAR_WORK_DIR="$CONTENTSOURCE1/work" \
-    VAR_LOGS_DIR="$CONTENTSOURCE1/logs" \
     VAR_TEMP_DIR="/tmp/tomcat" \
     VAR_MIN_MEM="128M" \
     VAR_MAX_MEM="1024M" \
