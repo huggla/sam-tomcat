@@ -12,6 +12,7 @@ then
    eval "VAR_CATALINA_OPTS=\"$VAR_CATALINA_OPTS\""
    tryMakeDir "$VAR_PREFS_DIR/.systemPrefs" write
    tryMakeDir "$VAR_PREFS_DIR/.userPrefs" write
+   sed -i "s/appBase=\"webapps\"/appBase=\"$VAR_WEBAPPS_DIR\"/g" /usr/local/tomcat/conf/server.xml
    linkContents="$(ls -A "$link" | sed 's/.snapshot\>//' | sed "s/\<$ignore\>//" | xargs)"
    if [ -z "$linkContents" ]
    then
