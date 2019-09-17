@@ -12,6 +12,12 @@ ARG CONTENTIMAGE2="huggla/libjpegturbo-content:$LIBJPEGTURBO_VERSION"
 ARG CONTENTSOURCE2="/content-app"
 ARG CONTENTDESTINATION2="/finalfs/content-app/"
 ARG EXCLUDEAPKS="libjpeg-turbo"
+ARG INITCMDS=\
+'   cat /tmp/onbuild/exclude.filelist | grep "libjpeg" '\
+'&& cat /tmp/onbuild/exclude.filelist | grep -oe "usr/lib/libjpeg[.]so[.][^>]*" '\
+'&& cat /tmp/onbuild/exclude.filelist | grep -oe "usr/lib/libjpeg[.]so[.][^>]*" | xargs -I @ find @ -maxdepth 0 -type l '\
+'&& cat /tmp/onbuild/exclude.filelist | grep -oe "usr/lib/libjpeg[.]so[.][^>]*" | xargs -I @ find @ -maxdepth 0 -type l | xargs -I @ sed "/^@>/d" /tmp/onbuild/exclude.filelist '\
+'&& cat /tmp/onbuild/exclude.filelist | grep -oe "usr/lib/libjpeg[.]so[.][^>]*" | xargs -I @ find @ -maxdepth 0 -type l | xargs -I @ sed -i "/^@>/d" /tmp/onbuild/exclude.filelist'
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat"
 ARG RUNDEPS="openjdk8-jre-base apr nss"
 ARG FINALCMDS=\
