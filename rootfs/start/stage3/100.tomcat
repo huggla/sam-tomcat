@@ -23,8 +23,8 @@ then
       webappsContents="$(ls -A "$VAR_WEBAPPS_DIR" | sed 's/.snapshot//' | xargs)"
       if [ -z "$webappsContents" ]
       then
-         cd "$VAR_WEBAPPS_DIR"
-         mtar -xvpf /webapps.tar.gz
+         mv /webapps/* "$VAR_WEBAPPS_DIR/"
+         rm -r /webapps
       if [ "$VAR_WITH_MANAGERS" == "false" ]
       then
          rm -rf manager host-manager
