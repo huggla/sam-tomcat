@@ -21,23 +21,22 @@ then
       sed -i "s|appBase=\"webapps\"|appBase=\"$VAR_WEBAPPS_DIR\"|g" /usr/local/tomcat/conf/server.xml
    fi
    replaceDirWithLink "/usr/local/tomcat/conf" "$VAR_CONFIG_DIR" "prefs"
+   if [ "$VAR_WITH_MANAGERS" == "false" ]
+   then
+      rm -r /webapps-nobind/manager /webapps-nobind/host-manager
+   fi
+   if [ "$VAR_WITH_MANAGERS" == "false" ] || [ -n "$VAR_ROOT_APP" ]
+   then
+      rm -rf /webapps-nobind/ROOT
+   fi
    if [ "$VAR_WEBAPPS_DIR" != "/webapps-nobind" ]
    then
       tryMakeDir "$VAR_WEBAPPS_DIR" write
       webappsContents="$(ls -A "$VAR_WEBAPPS_DIR" | sed 's/.snapshot//' | xargs)"
       if [ -z "$webappsContents" ]
       then
-         mv /webapps/* "$VAR_WEBAPPS_DIR/"
-         rm -r /webapps
-      if [ "$VAR_WITH_MANAGERS" == "false" ]
-      then
-         rm -rf manager host-manager
-      fi
-      if [ "$VAR_WITH_MANAGERS" == "false" ] || [ -n "$VAR_ROOT_APP" ]
-      then
-         rm -rf ROOT
-      fi
+         mv /webapps-nobind/* "$VAR_WEBAPPS_DIR/"
+         rm -r /webapps-nobind
       cd /
    fi
-   rm /webapps.tar.gz
 fi
