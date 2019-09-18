@@ -23,7 +23,7 @@ ARG FINALCMDS=\
 "&& find '$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
 "&& cd /usr/local/lib "\
 '&& ln -s ../../lib/jvm/java-1.8-openjdk/jre/lib/* ../../share/java/*.jar ./ '\
-'&& ln -s ../tomcat/native-jni-lib/* "$(readlink "$(pwd/amd64)")/" '\
+'&& ln -s ../tomcat/native-jni-lib/* "$(readlink "$(pwd ./amd64)")/" '\
 '&& cd /var/log '\
 '&& ln -s ../../usr/local/tomcat/logs tomcat '\
 "&& mv $CONTENTSOURCE1/webapps /webapps-nobind"
