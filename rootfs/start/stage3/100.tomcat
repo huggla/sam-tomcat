@@ -16,13 +16,15 @@ then
    linkContents="$(ls -A "$VAR_WEBAPPS_DIR" | sed 's/.snapshot\>//' | xargs)"
    if [ -z "$linkContents" ]
    then
+      cd "$VAR_WEBAPPS_DIR"
+      tar -xvpf /webapps.tar.gz
       if [ "$VAR_WITH_MANAGERS" == "false" ]
       then
-         rm -rf /usr/local/tomcat/webapps/ROOT /usr/local/tomcat/webapps/manager /usr/local/tomcat/webapps/host-manager
+         rm -rf ROOT manager host-manager
       fi
-      if [ -n "$VAR_ROOT_APP" ] && [ -d "/usr/local/tomcat/webapps/$VAR_ROOT_APP" ]
+      if [ -n "$VAR_ROOT_APP" ] && [ -d "$VAR_ROOT_APP" ]
       then
-         cd /usr/local/tomcat/webapps
+         rm -rf ROOT
          mv "$VAR_ROOT_APP" ROOT
          cd /
       fi
