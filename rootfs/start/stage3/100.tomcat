@@ -7,7 +7,6 @@
 
 if [ "$isFirstRun" == "true" ]
 then
-   tryMakeDir "$VAR_WEBAPPS_DIR" write
    eval "VAR_PREFS_DIR=\"$VAR_PREFS_DIR\""
    eval "VAR_CATALINA_OPTS=\"$VAR_CATALINA_OPTS\""
    tryMakeDir "$VAR_PREFS_DIR/.systemPrefs" write
@@ -18,11 +17,14 @@ then
       sed -i "s|appBase=\"webapps\"|appBase=\"$VAR_WEBAPPS_DIR\"|g" /usr/local/tomcat/conf/server.xml
    fi
    replaceDirWithLink "/usr/local/tomcat/conf" "$VAR_CONFIG_DIR" "prefs"
-   webappsContents="$(ls -A "$VAR_WEBAPPS_DIR" | sed 's/.snapshot//' | xargs)"
-   if [ -z "$webappsContents" ]
+   if [ "$VAR_WEBAPPS_DIR" != "/webapps" ]
    then
-      cd "$VAR_WEBAPPS_DIR"
-      tar -xvpf /webapps.tar.gz
+      tryMakeDir "$VAR_WEBAPPS_DIR" write
+      webappsContents="$(ls -A "$VAR_WEBAPPS_DIR" | sed 's/.snapshot//' | xargs)"
+      if [ -z "$webappsContents" ]
+      then
+         cd "$VAR_WEBAPPS_DIR"
+         mtar -xvpf /webapps.tar.gz
       if [ "$VAR_WITH_MANAGERS" == "false" ]
       then
          rm -rf manager host-manager
