@@ -29,4 +29,5 @@ then
          cd /
       fi
    fi
+   rm /webapps.tar.gz
 fi
