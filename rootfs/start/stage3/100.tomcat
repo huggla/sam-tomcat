@@ -12,9 +12,14 @@ then
    eval "VAR_CATALINA_OPTS=\"$VAR_CATALINA_OPTS\""
    tryMakeDir "$VAR_PREFS_DIR/.systemPrefs" write
    tryMakeDir "$VAR_PREFS_DIR/.userPrefs" write
-   sed -i "s|appBase=\"webapps\"|appBase=\"$VAR_WEBAPPS_DIR\"|g" /usr/local/tomcat/conf/server.xml
-   linkContents="$(ls -A "$VAR_WEBAPPS_DIR" | sed 's/.snapshot\>//' | xargs)"
-   if [ -z "$linkContents" ]
+   confDirContents="$(ls -A "$VAR_CONFIG_DIR" | sed 's/.snapshot//' | sed 's/prefs//' | xargs)"
+   if [ -z "$confDirContents" ]
+   then
+      sed -i "s|appBase=\"webapps\"|appBase=\"$VAR_WEBAPPS_DIR\"|g" /usr/local/tomcat/conf/server.xml
+   fi
+   replaceDirWithLink "/usr/local/tomcat/conf" "$VAR_CONFIG_DIR" "prefs"
+   webappsContents="$(ls -A "$VAR_WEBAPPS_DIR" | sed 's/.snapshot//' | xargs)"
+   if [ -z "$webappsContents" ]
    then
       cd "$VAR_WEBAPPS_DIR"
       tar -xvpf /webapps.tar.gz
