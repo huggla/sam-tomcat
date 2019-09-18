@@ -25,14 +25,13 @@ then
       tar -xvpf /webapps.tar.gz
       if [ "$VAR_WITH_MANAGERS" == "false" ]
       then
-         rm -rf ROOT manager host-manager
+         rm -rf manager host-manager
       fi
-      if [ -n "$VAR_ROOT_APP" ] && [ -d "$VAR_ROOT_APP" ]
+      if [ "$VAR_WITH_MANAGERS" == "false" ] || [ -n "$VAR_ROOT_APP" ]
       then
          rm -rf ROOT
-         mv "$VAR_ROOT_APP" ROOT
-         cd /
       fi
+      cd /
    fi
    rm /webapps.tar.gz
 fi
