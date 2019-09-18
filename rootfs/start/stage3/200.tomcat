@@ -7,8 +7,8 @@
 
 if [ "$isFirstRun" == "true" ]
 then
-   if [ -n "$VAR_ROOT_APP" ] && [ -d "$VAR_ROOT_APP" ]
+   if [ -n "$VAR_ROOT_APP" ] [ ! -e "$VAR_WEBAPPS_DIR/ROOT" ] && [ -d "$VAR_WEBAPPS_DIR/$VAR_ROOT_APP" ]
    then
-      mv "$VAR_ROOT_APP" ROOT
-         cd /
-      fi
+      mv "$VAR_WEBAPPS_DIR/$VAR_ROOT_APP" "$VAR_WEBAPPS_DIR/ROOT"
+   fi
+fi
