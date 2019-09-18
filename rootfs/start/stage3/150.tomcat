@@ -8,5 +8,4 @@
 if [ "$isFirstRun" == "true" ]
 then
    replaceDirWithLink "/usr/local/tomcat/conf" "$VAR_CONFIG_DIR" "prefs"
-   replaceDirWithLink "/usr/local/tomcat/webapps" "$VAR_WEBAPPS_DIR"
 fi
