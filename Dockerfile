@@ -25,7 +25,7 @@ ARG FINALCMDS=\
 '&& ln -s ../../lib/jvm/java-1.8-openjdk/jre/lib/* ../tomcat/native-jni-lib/* ../../share/java/*.jar ./ '\
 '&& cd /var/log '\
 '&& ln -s ../../usr/local/tomcat/logs tomcat '\
-"&& mv $CONTENTSOURCE1/webapps /"
+"&& mv $CONTENTSOURCE1/webapps /webapps-nobind"
 ARG GID0WRITABLES="$CONTENTSOURCE1"
 ARG GID0WRITABLESRECURSIVE="/webapps $CONTENTSOURCE1/work $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
@@ -61,7 +61,7 @@ ENV VAR_LINUX_USER="tomcat" \
     VAR_FINAL_COMMAND="JRE_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_TMPDIR=\"\$VAR_TEMP_DIR\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" /usr/local/bin/catalina.sh run" \
     VAR_CONFIG_DIR="/etc/tomcat" \
     VAR_PREFS_DIR="\$VAR_CONFIG_DIR/prefs" \
-    VAR_WEBAPPS_DIR="/webapps" \
+    VAR_WEBAPPS_DIR="" \
     VAR_TEMP_DIR="/tmp/tomcat" \
     VAR_MIN_MEM="128M" \
     VAR_MAX_MEM="1024M" \
