@@ -24,12 +24,15 @@ ARG FINALCMDS=\
 "&& cd /usr/local/lib "\
 '&& ln -s ../../lib/jvm/java-1.8-openjdk/jre/lib/* ../tomcat/native-jni-lib/* ../../share/java/*.jar ./ '\
 '&& cd /var/log '\
-'&& ln -s ../../usr/local/tomcat/logs tomcat'
+'&& ln -s ../../usr/local/tomcat/logs tomcat '\
+"&& cd $CONTENTSOURCE1/webapps "\
+'&& rm -rf examples docs '\
+'&& tar -cvpf /webapps.tar.gz *'
 ARG GID0WRITABLES="$CONTENTSOURCE1"
-ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/webapps $CONTENTSOURCE1/work $CONTENTSOURCE1/temp $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
+ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/work $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
-ARG REMOVEDIRS="$CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs $CONTENTSOURCE1/include"
-ARG REMOVEFILES="$CONTENTSOURCE1/bin/commons-daemon* $CONTENTSOURCE1/temp/*"
+ARG REMOVEDIRS="$CONTENTSOURCE1/include $CONTENTSOURCE1/temp $CONTENTSOURCE1/webapps"
+ARG REMOVEFILES="$CONTENTSOURCE1/bin/commons-daemon*"
 # ARGs (can be passed to Build/Final) </END>
 
 # Generic template (don't edit) <BEGIN>
