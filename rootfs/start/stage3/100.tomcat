@@ -35,7 +35,7 @@ then
       webappsContents="$(ls -A "$VAR_WEBAPPS_DIR" | sed 's/.snapshot//' | xargs)"
       if [ -z "$webappsContents" ]
       then
-         cp -a /webapps-nobind/* "$VAR_WEBAPPS_DIR/"
+         cp -a /webapps-nobind "$VAR_WEBAPPS_DIR"
       cd /
    fi
 fi
