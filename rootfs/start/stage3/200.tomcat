@@ -1,0 +1,6 @@
+if [ -n "$VAR_ROOT_APP" ] && [ -d "$VAR_ROOT_APP" ]
+      then
+         rm -rf ROOT
+         mv "$VAR_ROOT_APP" ROOT
+         cd /
+      fi
