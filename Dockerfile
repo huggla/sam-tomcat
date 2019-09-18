@@ -17,7 +17,7 @@ ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat
 ARG RUNDEPS="openjdk8-jre-base apr nss"
 ARG FINALCMDS=\
 "   find /content-app/ -mindepth 1 -maxdepth 1 ! -name "*.gz" -exec cp -a "{}" / \; "\
-"&& rm -rf /content-app "\
+"&& rm -rf /content-app $CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs "\
 "&& find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash\$|#!/usr/local/bin/dash|' '{}' \; "\
 "&& find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash\$|#!/usr/local/bin/dash|' '{}' \; "\
 "&& find '$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
@@ -25,9 +25,7 @@ ARG FINALCMDS=\
 '&& ln -s ../../lib/jvm/java-1.8-openjdk/jre/lib/* ../tomcat/native-jni-lib/* ../../share/java/*.jar ./ '\
 '&& cd /var/log '\
 '&& ln -s ../../usr/local/tomcat/logs tomcat '\
-"&& cd $CONTENTSOURCE1/webapps "\
-'&& rm -rf examples docs '\
-'&& tar -cvpf /webapps.tar.gz *'
+"&& mv $CONTENTSOURCE1/webapps /"
 ARG GID0WRITABLES="$CONTENTSOURCE1"
 ARG GID0WRITABLESRECURSIVE="$CONTENTSOURCE1/work $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
 ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
