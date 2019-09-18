@@ -7,6 +7,10 @@
 
 if [ "$isFirstRun" == "true" ]
 then
+   if [ -z "$VAR_WEBAPPS_DIR" ]
+   then
+      VAR_WEBAPPS_DIR="/webapps-nobind"
+   fi      
    eval "VAR_PREFS_DIR=\"$VAR_PREFS_DIR\""
    eval "VAR_CATALINA_OPTS=\"$VAR_CATALINA_OPTS\""
    tryMakeDir "$VAR_PREFS_DIR/.systemPrefs" write
@@ -17,7 +21,7 @@ then
       sed -i "s|appBase=\"webapps\"|appBase=\"$VAR_WEBAPPS_DIR\"|g" /usr/local/tomcat/conf/server.xml
    fi
    replaceDirWithLink "/usr/local/tomcat/conf" "$VAR_CONFIG_DIR" "prefs"
-   if [ "$VAR_WEBAPPS_DIR" != "/webapps" ]
+   if [ "$VAR_WEBAPPS_DIR" != "/webapps-nobind" ]
    then
       tryMakeDir "$VAR_WEBAPPS_DIR" write
       webappsContents="$(ls -A "$VAR_WEBAPPS_DIR" | sed 's/.snapshot//' | xargs)"
