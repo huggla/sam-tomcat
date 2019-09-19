@@ -2,7 +2,7 @@
 # Init
 # =========================================================================
 # ARGs (can be passed to Build/Final) <BEGIN>
-ARG TAG="20190917"
+ARG TAG="20190919"
 ARG IMAGETYPE="application,base"
 ARG CONTENTIMAGE1="tomcat:9-jre8-alpine"
 ARG CONTENTSOURCE1="/usr/local/tomcat"
