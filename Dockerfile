@@ -14,6 +14,7 @@ ARG CONTENTDESTINATION2="/finalfs/content-app/"
 ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG INITCMDS='sed -i "/^\/usr\/lib\/libturbojpeg[.]so.*>libturbojpeg/d" /tmp/onbuild/exclude.filelist'
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat $CONTENTSOURCE1/logs $CONTENTSOURCE1/work/Catalina/localhost"
+ARG KEEPEMPTYDIRS="yes"
 ARG RUNDEPS="openjdk8-jre-base apr nss"
 ARG FINALCMDS=\
 "   find /content-app/ -mindepth 1 -maxdepth 1 ! -name "*.gz" -exec cp -a "{}" / \; "\
