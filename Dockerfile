@@ -9,15 +9,26 @@ ARG CONTENTSOURCE1="/usr/local/tomcat"
 ARG CONTENTDESTINATION1="/finalfs$CONTENTSOURCE1"
 ARG LIBJPEGTURBO_VERSION="2.0.2"
 ARG CONTENTIMAGE2="huggla/libjpegturbo-content:$LIBJPEGTURBO_VERSION"
-ARG CONTENTSOURCE2="/content-app"
-ARG CONTENTDESTINATION2="/finalfs/content-app/"
+ARG CONTENTSOURCE2="/content-*"
+ARG CONTENTDESTINATION2="/"
 ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG INITCMDS='sed -i "/^\/usr\/lib\/libturbojpeg[.]so.*>libturbojpeg/d" /tmp/onbuild/exclude.filelist'
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat $CONTENTSOURCE1/logs $CONTENTSOURCE1/work/Catalina/localhost"
 ARG RUNDEPS="openjdk8-jre-base apr nss"
+ARG BUILDCMDS=\
+'   cd / '\
+'&& gzfiles="$(ls *.gz | grep -ve "-doc[.]gz$" | grep -ve "-dev[.]gz$" | xargs)" '\
+'&& echo "$gzfiles" '\
+'&& content="$(zcat $gzfiles | sort -u - | xargs)" '\
+'&& for file in $content; '\
+'   do '\
+'      if [ ! -e "/finalfs/$file" ] || [ -f "/finalfs/$file" ]; '\
+'      then '\
+'         cp -a "$file" "/finalfs/$file"; '\
+'      fi; '\
+'   done'
 ARG FINALCMDS=\
-"   find /content-app/ -mindepth 1 -maxdepth 1 ! -name "*.gz" -exec cp -a "{}" / \; "\
-"&& rm -rf /content-app $CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs "\
+"   rm -rf $CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs "\
 "&& find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash\$|#!/usr/local/bin/dash|' '{}' \; "\
 "&& find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash\$|#!/usr/local/bin/dash|' '{}' \; "\
 "&& find '$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
