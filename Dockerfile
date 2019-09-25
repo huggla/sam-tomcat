@@ -22,9 +22,9 @@ ARG BUILDCMDS=\
 '&& content="$(zcat $gzfiles | sort -u - | xargs)" '\
 '&& for file in $content; '\
 '   do '\
-'      if [ ! -e "/finalfs/$file" ] || [ -f "/finalfs/$file" ]; '\
+'      if [ ! -e "/finalfs$file" ] || [ -f "/finalfs$file" ]; '\
 '      then '\
-'         cp -a "$file" "/finalfs/$file"; '\
+'         cp -a "$file" "/finalfs$file"; '\
 '      fi; '\
 '   done'
 ARG FINALCMDS=\
