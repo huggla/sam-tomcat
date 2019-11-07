@@ -1,5 +1,5 @@
 # tomcat-alpine
-Tomcat on Alpine. You have to set VAR_WEBAPPS_DIR if you want to bind-mount the webapps-directory.
+Tomcat on Alpine. VAR_WEBAPPS_DIR needs to be set if you want to bind-mount the webapps-directory.
 
 ## Environment variables
 ### Runtime variables with default value
