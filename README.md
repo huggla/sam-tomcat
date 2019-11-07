@@ -12,11 +12,10 @@ Tomcat on Alpine.
 * VAR_MAX_MEM="1024M"
 * VAR_CATALINA_OPTS="-Xms\$VAR_MIN_MEM -Xmx\$VAR_MAX_MEM -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Dfile.encoding=UTF8 -Duser.timezone=GMT -Djavax.servlet.request.encoding=UTF-8 -Djavax.servlet.response.encoding=UTF-8 -Dorg.geotools.shapefile.datetime=true -server -Xrs -XX:PerfDataSamplingInterval=500 -Dorg.geotools.referencing.forceXY=true -XX:SoftRefLRUPolicyMSPerMB=36000 -XX:NewRatio=2 -XX:+CMSClassUnloadingEnabled -Djava.util.prefs.userRoot=\$VAR_PREFS_DIR/.userPrefs -Djava.util.prefs.systemRoot=\$VAR_PREFS_DIR"
 * VAR_CATALINA_OUT="/dev/null"
-* VAR_WITH_MANAGERS="true"
+* VAR_WITH_MANAGERS="true" (Set to false if you do not want to install the Tomcat admin-tools during new install)
 
 ### Optional runtime variables
-* VAR_WEBAPPS_DIR="&lt;a directory&gt;"
-* VAR_WITH_MANAGERS="false"
+* VAR_WEBAPPS_DIR="&lt;a directory&gt;" (/webapps-nobind if not set)
 * VAR_ROOT_APP="&lt;a directory name&gt;"
 
 ## Capabilities
