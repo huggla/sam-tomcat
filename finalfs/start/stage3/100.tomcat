@@ -19,6 +19,11 @@ then
    if [ -z "$confDirContents" ]
    then
       sed -i "s|appBase=\"webapps\"|appBase=\"$VAR_WEBAPPS_DIR\"|g" /usr/local/tomcat/conf/server.xml
+      if [ "$VAR_WITH_MANAGERS" == "true" ] && [ -n "$VAR_MANAGER_ROLES" ] && [ -n "$VAR_MANAGER_PASSWORD" ]
+      then
+         echo '<role rolename="manager-gui"/>' >> /usr/local/tomcat/conf/tomcat-users.xml
+         echo "<user username='$VAR_LINUX_USER' password='$VAR_MANAGER_PASSWORD' roles='$VAR_MANAGER_ROLES'/>" >> /usr/local/tomcat/conf/tomcat-users.xml
+      fi
    fi
    replaceDirWithLink "/usr/local/tomcat/conf" "$VAR_CONFIG_DIR" "prefs"
    if [ "$VAR_WITH_MANAGERS" == "false" ]
