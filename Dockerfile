@@ -8,8 +8,8 @@ ARG IMAGETYPE="application,base"
 ARG CONTENTIMAGE1="tomcat:9-jre8-alpine"
 ARG CONTENTSOURCE1="/usr/local/tomcat"
 ARG CONTENTDESTINATION1="/finalfs$CONTENTSOURCE1"
-ARG LIBJPEGTURBO_VERSION="2.0.2"
-ARG CONTENTIMAGE2="huggla/libjpegturbo-content:$LIBJPEGTURBO_VERSION"
+ARG LIBJPEGTURBO_VERSION="2.0.3"
+ARG CONTENTIMAGE2="huggla/libjpegturbo-content:$LIBJPEGTURBO_VERSION-$TAG"
 ARG CONTENTSOURCE2="/content-*"
 ARG CONTENTDESTINATION2="/"
 ARG EXCLUDEAPKS="libjpeg-turbo"
@@ -81,7 +81,9 @@ ENV VAR_LINUX_USER="tomcat" \
     VAR_MAX_MEM="1024M" \
     VAR_CATALINA_OPTS="-Xms\$VAR_MIN_MEM -Xmx\$VAR_MAX_MEM -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Dfile.encoding=UTF8 -Duser.timezone=GMT -Djavax.servlet.request.encoding=UTF-8 -Djavax.servlet.response.encoding=UTF-8 -Dorg.geotools.shapefile.datetime=true -server -Xrs -XX:PerfDataSamplingInterval=500 -Dorg.geotools.referencing.forceXY=true -XX:SoftRefLRUPolicyMSPerMB=36000 -XX:NewRatio=2 -XX:+CMSClassUnloadingEnabled -Djava.util.prefs.userRoot=\$VAR_PREFS_DIR/.userPrefs -Djava.util.prefs.systemRoot=\$VAR_PREFS_DIR" \
     VAR_CATALINA_OUT="/dev/null" \
-    VAR_WITH_MANAGERS="true"
+    VAR_WITH_MANAGERS="true" \
+    VAR_MANAGER_ROLES="status" \
+    VAR_MANAGER_PASSWORD="s3cret"
 
 # Generic template (don't edit) <BEGIN>
 USER starter
