@@ -62,4 +62,8 @@ then
          fi
       fi
    fi
+   if [ ! -e "/usr/local/tomcat/webapps" ]
+   then
+      ln -s "$VAR_WEBAPPS_DIR" "/usr/local/tomcat/webapps"
+   fi
 fi
