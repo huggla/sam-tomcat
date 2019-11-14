@@ -4,7 +4,7 @@
 # ARGs (can be passed to Build/Final) <BEGIN>
 ARG SaM_VERSION="1.1-edge"
 ARG TAG="20191112"
-ARG IMAGETYPE="application
+ARG IMAGETYPE="application"
 ARG TOMCAT_VERSION="9.0.20"
 ARG EPANET_VERSION="2.00.12"
 ARG SWMM_VERSION="5.1.013"
