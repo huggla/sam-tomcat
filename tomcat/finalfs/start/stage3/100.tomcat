@@ -46,6 +46,20 @@ then
       if [ -z "$webappsContents" ]
       then
          cp -a /webapps-nobind "$VAR_WEBAPPS_DIR"
+      elif [ "$VAR_WITH_MANAGERS" == "true" ] && [ -n "$VAR_MANAGER_ROLES" ] && [ -n "$VAR_MANAGER_PASSWORD" ]
+      then
+         if [ "${webappsContents#*ROOT}" == "$webappsContents" ]
+         then
+            cp -a /webapps-nobind/ROOT "$VAR_WEBAPPS_DIR/"
+         fi
+         if [ "${webappsContents#*host-manager}" == "$webappsContents" ]
+         then
+            cp -a /webapps-nobind/host-manager "$VAR_WEBAPPS_DIR/"
+         fi
+         if [ "${webappsContents#*manager}" == "${webappsContents#*host-manager}" ]
+         then
+            cp -a /webapps-nobind/manager "$VAR_WEBAPPS_DIR/"
+         fi
       fi
    fi
 fi
