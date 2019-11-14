@@ -11,7 +11,7 @@ then
    then
       mv "$VAR_WEBAPPS_DIR/$VAR_ROOT_APP" "$VAR_WEBAPPS_DIR/ROOT"
    fi
-   if [ "$VAR_WEBAPPS_DIR" != "/webapps-nobind" ]
+   if [ "$VAR_WEBAPPS_DIR" != "/webapps-nobind" ] && [ "$VAR_WITH_MANAGERS" == "false" ]
    then
       rm -r /webapps-nobind
    fi
