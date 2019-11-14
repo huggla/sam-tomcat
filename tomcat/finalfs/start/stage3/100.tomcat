@@ -50,15 +50,15 @@ then
       then
          if [ "${webappsContents#*ROOT}" == "$webappsContents" ] && [ -z "$VAR_ROOT_APP" ]
          then
-            cp -a /webapps-nobind/ROOT "$VAR_WEBAPPS_DIR/"
+            ln -s /webapps-nobind/ROOT "$VAR_WEBAPPS_DIR/"
          fi
          if [ "${webappsContents#*host-manager}" == "$webappsContents" ]
          then
-            cp -a /webapps-nobind/host-manager "$VAR_WEBAPPS_DIR/"
+            ln -s /webapps-nobind/host-manager "$VAR_WEBAPPS_DIR/"
          fi
          if [ "${webappsContents#*manager}" == "${webappsContents#*host-manager}" ]
          then
-            cp -a /webapps-nobind/manager "$VAR_WEBAPPS_DIR/"
+            ln -s /webapps-nobind/manager "$VAR_WEBAPPS_DIR/"
          fi
       fi
    fi
