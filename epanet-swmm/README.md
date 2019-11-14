@@ -1,2 +1,2 @@
 # tomcat-alpine:epanet-swmm
-huggla/tomcat-alpine with Epanet2 and Swmm5 added.
+huggla/tomcat-alpine with Epanet and Swmm added.
