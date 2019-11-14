@@ -1,48 +1,58 @@
-ARG TAG="20190418"
+# =========================================================================
+# Init
+# =========================================================================
+# ARGs (can be passed to Build/Final) <BEGIN>
+ARG SaM_VERSION="1.1-edge"
+ARG TAG="20191112"
+ARG IMAGETYPE="application
+ARG TOMCAT_VERSION="9.0.20"
 ARG EPANET_VERSION="2.00.12"
 ARG SWMM_VERSION="5.1.013"
-ARG CONTENTIMAGE1="huggla/epanet:$EPANET_VERSION"
-ARG CONTENTSOURCE1="/epanet"
-ARG CONTENTIMAGE2="huggla/swmm:$SWMM_VERSION"
-ARG CONTENTSOURCE2="/swmm"
+ARG CONTENTIMAGE1="huggla/content-alpine:epanet_$EPANET_VERSION-$TAG"
+ARG CONTENTSOURCE1="/content-*"
+ARG CONTENTDESTINATION1="/"
+ARG CONTENTIMAGE2="huggla/content-alpine:swmm_$SWMM_VERSION-$TAG"
+ARG CONTENTSOURCE2="/content-*"
+ARG CONTENTDESTINATION2="/"
 ARG MAKEDIRS="/usr/local/tomcat/work/epanet /usr/local/tomcat/work/swmm"
-ARG BASEIMAGE="huggla/tomcat-alpine:openjdk-$TAG"
+ARG BASEIMAGE="huggla/tomcat-alpine:$TOMCAT_VERSION-$TAG"
 ARG EXECUTABLES="/usr/bin/epanet2 /usr/bin/swmm5"
+ARG BUILDCMDS=\
+'   cd / '\
+'&& gzfiles="$(ls *.gz | grep -ve "-doc[.]gz$" | grep -ve "-dev[.]gz$" | xargs)" '\
+'&& echo "$gzfiles" '\
+'&& content="$(zcat $gzfiles | sort -u - | xargs)" '\
+'&& for file in $content; '\
+'   do '\
+'      if [ ! -e "/finalfs$file" ] || [ -f "/finalfs$file" ]; '\
+'      then '\
+'         cp -a "$file" "/finalfs$file"; '\
+'      fi; '\
+'   done'
+# ARGs (can be passed to Build/Final) </END>
 
-#--------Generic template (don't edit)--------
+# Generic template (don't edit) <BEGIN>
 FROM ${CONTENTIMAGE1:-scratch} as content1
 FROM ${CONTENTIMAGE2:-scratch} as content2
 FROM ${CONTENTIMAGE3:-scratch} as content3
-FROM ${INITIMAGE:-${BASEIMAGE:-huggla/base:$TAG}} as init
-FROM ${BUILDIMAGE:-huggla/build} as build
-FROM ${BASEIMAGE:-huggla/base:$TAG} as image
-ARG CONTENTSOURCE1
-ARG CONTENTSOURCE1="${CONTENTSOURCE1:-/}"
-ARG CONTENTDESTINATION1
-ARG CONTENTDESTINATION1="${CONTENTDESTINATION1:-/buildfs/}"
-ARG CONTENTSOURCE2
-ARG CONTENTSOURCE2="${CONTENTSOURCE2:-/}"
-ARG CONTENTDESTINATION2
-ARG CONTENTDESTINATION2="${CONTENTDESTINATION2:-/buildfs/}"
-ARG CONTENTSOURCE3
-ARG CONTENTSOURCE3="${CONTENTSOURCE3:-/}"
-ARG CONTENTDESTINATION3
-ARG CONTENTDESTINATION3="${CONTENTDESTINATION3:-/buildfs/}"
-ARG CLONEGITSDIR
-ARG DOWNLOADSDIR
-ARG MAKEDIRS
-ARG MAKEFILES
-ARG EXECUTABLES
-ARG STARTUPEXECUTABLES
-ARG EXPOSEFUNCTIONS
-ARG GID0WRITABLES
-ARG GID0WRITABLESRECURSIVE
-ARG LINUXUSEROWNED
-ARG LINUXUSEROWNEDRECURSIVE
-COPY --from=build /imagefs /
-#---------------------------------------------
+FROM ${CONTENTIMAGE4:-scratch} as content4
+FROM ${CONTENTIMAGE5:-scratch} as content5
+FROM ${INITIMAGE:-${BASEIMAGE:-huggla/sam_$SaM_VERSION:base-$TAG}} as init
+# Generic template (don't edit) </END>
 
-#--------Generic template (don't edit)--------
+# =========================================================================
+# Build
+# =========================================================================
+# Generic template (don't edit) <BEGIN>
+FROM ${BUILDIMAGE:-huggla/sam_$SaM_VERSION:build-$TAG} as build
+FROM ${BASEIMAGE:-huggla/sam_$SaM_VERSION:base-$TAG} as final
+COPY --from=build /finalfs /
+# Generic template (don't edit) </END>
+
+# =========================================================================
+# Final
+# =========================================================================
+# Generic template (don't edit) <BEGIN>
 USER starter
 ONBUILD USER root
-#---------------------------------------------
+# Generic template (don't edit) </END>
