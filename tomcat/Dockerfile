@@ -84,7 +84,8 @@ ENV VAR_LINUX_USER="tomcat" \
     VAR_CATALINA_OUT="/dev/null" \
     VAR_WITH_MANAGERS="true" \
     VAR_MANAGER_ROLES="status" \
-    VAR_MANAGER_PASSWORD="s3cret"
+    VAR_MANAGER_PASSWORD="s3cret" \
+    VAR_MANAGER_LISTEN="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1"
 
 # Generic template (don't edit) <BEGIN>
 USER starter
