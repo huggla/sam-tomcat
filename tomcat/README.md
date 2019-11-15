@@ -13,6 +13,9 @@ Tomcat on Alpine. VAR_WEBAPPS_DIR needs to be set if you want to bind mount the 
 * VAR_CATALINA_OPTS="-Xms\$VAR_MIN_MEM -Xmx\$VAR_MAX_MEM -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Dfile.encoding=UTF8 -Duser.timezone=GMT -Djavax.servlet.request.encoding=UTF-8 -Djavax.servlet.response.encoding=UTF-8 -Dorg.geotools.shapefile.datetime=true -server -Xrs -XX:PerfDataSamplingInterval=500 -Dorg.geotools.referencing.forceXY=true -XX:SoftRefLRUPolicyMSPerMB=36000 -XX:NewRatio=2 -XX:+CMSClassUnloadingEnabled -Djava.util.prefs.userRoot=\$VAR_PREFS_DIR/.userPrefs -Djava.util.prefs.systemRoot=\$VAR_PREFS_DIR"
 * VAR_CATALINA_OUT="/dev/null"
 * VAR_WITH_MANAGERS="true" (Set to false if you do not want to install the Tomcat admin-tools during new install)
+* VAR_MANAGER_ROLES="status" \
+* VAR_MANAGER_PASSWORD="s3cret" \
+* VAR_MANAGER_LISTEN="127.d+.d+.d+|::1|0:0:0:0:0:0:0:1"
 
 ### Optional runtime variables
 * VAR_WEBAPPS_DIR="&lt;a directory&gt;" (/webapps-nobind if not set)
