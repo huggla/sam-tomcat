@@ -55,8 +55,9 @@ then
          if [ "${webappsContents#*host-manager}" == "$webappsContents" ]
          then
             ln -s /webapps-nobind/host-manager "$VAR_WEBAPPS_DIR/"
+            webappsContents="$(echo "$webappsContents" | sed 's/host-manager//')"
          fi
-         if [ "${webappsContents#*manager}" == "${webappsContents#*host-manager}" ]
+         if [ "${webappsContents#*manager}" == "$webappsContents" ]
          then
             ln -s /webapps-nobind/manager "$VAR_WEBAPPS_DIR/"
          fi
