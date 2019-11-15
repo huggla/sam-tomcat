@@ -65,7 +65,8 @@ then
    fi
    if [ "$VAR_WITH_MANAGERS" == "true" ] && [ -e "$VAR_WEBAPPS_DIR/manager/META-INF/context.xml" ]
    then
-      substituteStr='s/allow="[^"]*"/allow="'$VAR_MANAGER_LISTEN'"/'
+      VAR_MANAGER_LISTEN="$(echo "$VAR_MANAGER_LISTEN" | sed 's/[.]/\\\\./g' | sed 's/d/\\\\d/g')"
+      substituteStr='s/allow="[^"]*"/allow="'"$VAR_MANAGER_LISTEN"'"/'
       sed -i "$substituteStr" "$VAR_WEBAPPS_DIR/manager/META-INF/context.xml"
    fi
    if [ ! -e "/usr/local/tomcat/webapps" ]
