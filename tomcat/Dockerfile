@@ -38,7 +38,8 @@ ARG FINALCMDS=\
 '&& cd /usr/lib '\
 '&& ln -s ../local/tomcat/native-jni-lib/* ./ '\
 '&& cd /var/log '\
-'&& ln -s ../../usr/local/tomcat/logs tomcat '\
+"&& ln -s ../..$CONTENTSOURCE1/logs tomcat "\
+"&& sed -i 's/autoDeploy=\"true\"/autoDeploy=\"true\" deployIgnore=\".snapshot\"/' $CONTENTSOURCE1/conf/server.xml "\
 "&& mv $CONTENTSOURCE1/webapps /webapps-nobind"
 ARG GID0WRITABLES="$CONTENTSOURCE1"
 ARG GID0WRITABLESRECURSIVE="/webapps-nobind $CONTENTSOURCE1/work $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
