@@ -45,9 +45,9 @@ ARG FINALCMDS=\
 '&& cd /usr/lib '\
 '&& ln -s ../local/tomcat/native-jni-lib/* ./ '\
 '&& cd /var/log '\
-"&& ln -s ../..$CATALINA_HOME/logs tomcat "\
+"&& ln -s ../..$CATALINA_HOME/logs tomcat "
 #"&& sed -i 's/autoDeploy=\"true\"/autoDeploy=\"true\" deployIgnore=\".snapshot\"/' $CATALINA_HOME/conf/server.xml "\
-"&& mv $CATALINA_HOME/webapps /webapps-nobind"
+#"&& mv $CATALINA_HOME/webapps /webapps-nobind"
 ARG GID0WRITABLES="$CATALINA_HOME"
 ARG GID0WRITABLESRECURSIVE="/webapps-nobind $CATALINA_HOME/work $CATALINA_HOME/logs $CATALINA_HOME/conf"
 ARG STARTUPEXECUTABLES="$CATALINA_HOME/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
