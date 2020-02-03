@@ -35,7 +35,24 @@ ARG BUILDCMDS=\
 '&& ./configure --build="$gnuArch" --libdir="'$TOMCAT_NATIVE_LIBDIR'" --prefix="'$CATALINA_HOME'" --with-apr="$(which apr-1-config)" --with-java-home="/usr/lib/jvm/default-jvm" --with-ssl=yes '\
 '&& eval "$COMMON_MAKECMDS" '\
 "&& scanelf --needed --nobanner --format '%n#p' --recursive $TOMCAT_NATIVE_LIBDIR | tr ',' '\n' | sort -u | awk 'system(\"[ -e /usr/local/lib/\" \$1 \" ]\") == 0 { next } { print \"so:\" \$1 }'"
-ARG REMOVEFILES="/bin/*.bat"
+ARG FINALCMDS=\
+"   rm -rf $CATALINA_HOME/webapps/examples $CATALINA_HOME/webapps/docs "\
+"&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash\$|#!/usr/local/bin/dash|' '{}' \; "\
+"&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash\$|#!/usr/local/bin/dash|' '{}' \; "\
+"&& find '$CATALINA_HOME' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
+"&& cd /usr/local/lib "\
+'&& ln -s ../../lib/jvm/java-1.8-openjdk/jre/lib/* ../../share/java/*.jar ./ '\
+'&& cd /usr/lib '\
+'&& ln -s ../local/tomcat/native-jni-lib/* ./ '\
+'&& cd /var/log '\
+"&& ln -s ../..$CATALINA_HOME/logs tomcat "\
+"&& sed -i 's/autoDeploy=\"true\"/autoDeploy=\"true\" deployIgnore=\".snapshot\"/' $CATALINA_HOME/conf/server.xml "\
+"&& mv $CATALINA_HOME/webapps /webapps-nobind"
+ARG GID0WRITABLES="$CATALINA_HOME"
+ARG GID0WRITABLESRECURSIVE="/webapps-nobind $CATALINA_HOME/work $CATALINA_HOME/logs $CATALINA_HOME/conf"
+ARG STARTUPEXECUTABLES="$CATALINA_HOME/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
+ARG REMOVEDIRS="$CATALINA_HOME/include $CATALINA_HOME/temp"
+ARG REMOVEFILES="$CATALINA_HOME/bin/commons-daemon* $CATALINA_HOME/bin/*.bat"
 # ARGs (can be passed to Build/Final) </END>
 
 # Generic template (don't edit) <BEGIN>
