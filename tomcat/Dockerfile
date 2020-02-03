@@ -20,7 +20,7 @@ ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG INITCMDS='sed -i "/^\/usr\/lib\/libturbojpeg[.]so.*>libturbojpeg/d" /tmp/onbuild/exclude.filelist'
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CATALINA_HOME/conf/Catalina /tmp/tomcat $CATALINA_HOME/logs $CATALINA_HOME/work/Catalina/localhost"
 ARG RUNDEPS="openjdk11-jre-headless apr nss"
-ARG DOWNLOADS="https://apache.mirrors.spacedump.net/tomcat/tomcat-$TOMCAT_MAJOR_VERSION/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz"
+ARG DOWNLOADS="http://apache.mirrors.spacedump.net/tomcat/tomcat-$TOMCAT_MAJOR_VERSION/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz"
 ARG BUILDDEPS="apr-dev coreutils dpkg-dev dpkg libc-dev openjdk11 openssl-dev"
 ARG BUILDCMDS=\
 "   mkdir tomcat-native "\
