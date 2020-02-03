@@ -32,7 +32,7 @@ ARG BUILDCMDS=\
 "&& cd native "\
 '&& export CATALINA_HOME=$PWD '\
 '&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" '\
-'&& ./configure --build="$gnuArch" --libdir="'$TOMCAT_NATIVE_LIBDIR'" --prefix="$CATALINA_HOME" --with-apr="$(which apr-1-config)" --with-java-home="$JAVA_HOME" --with-ssl=yes '\
+'&& ./configure --build="$gnuArch" --libdir="'$TOMCAT_NATIVE_LIBDIR'" --prefix="/usr" --with-apr="$(which apr-1-config)" --with-java-home="/usr/lib/jvm/default-jvm" --with-ssl=yes '\
 '&& eval "$COMMON_MAKECMDS" '\
 "&& scanelf --needed --nobanner --format '%n#p' --recursive $TOMCAT_NATIVE_LIBDIR | tr ',' '\n' | sort -u | awk 'system(\"[ -e /usr/local/lib/\" \$1 \" ]\") == 0 { next } { print \"so:\" \$1 }'"
 ARG REMOVEFILES="/bin/*.bat"
@@ -64,7 +64,7 @@ ARG CATALINA_HOME
 # ARGs passed from Init </END>
 
 ENV VAR_LINUX_USER="tomcat" \
-    VAR_FINAL_COMMAND="JRE_HOME=\"/usr/local\" CATALINA_HOME=\"$CATALINA_HOME\" CATALINA_TMPDIR=\"\$VAR_TEMP_DIR\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" /usr/local/bin/catalina.sh run" \
+    VAR_FINAL_COMMAND="JRE_HOME=\"/usr/local\" CATALINA_HOME=\"$CATALINA_HOME\" CATALINA_TMPDIR=\"\$VAR_TEMP_DIR\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=11 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" /usr/local/bin/catalina.sh run" \
     VAR_CONFIG_DIR="/etc/tomcat" \
     VAR_PREFS_DIR="\$VAR_CONFIG_DIR/prefs" \
     VAR_WEBAPPS_DIR="" \
