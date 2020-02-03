@@ -12,6 +12,7 @@ ARG TOMCAT_MINOR_VERSION="0.30"
 ARG TOMCAT_VERSION="$TOMCAT_MAJOR_VERSION.$TOMCAT_MINOR_VERSION"
 ARG LIBJPEGTURBO_VERSION="2.0.3"
 ARG CATALINA_HOME="/usr/local/tomcat"
+ARG TOMCAT_NATIVE_LIBDIR="$CATALINA_HOME/native-jni-lib"
 ARG CONTENTIMAGE2="huggla/content-alpine:libjpegturbo_$LIBJPEGTURBO_VERSION-$TAG"
 ARG CONTENTSOURCE2="/content-*"
 ARG CONTENTDESTINATION2="/"
@@ -24,40 +25,17 @@ ARG BUILDDEPS="apr-dev coreutils dpkg-dev dpkg libc-dev openjdk11 openssl-dev"
 ARG BUILDCMDS=\
 "   mkdir tomcat-native "\
 "&& mv apache-tomcat-$TOMCAT_VERSION/bin/tomcat-native.tar.gz tomcat-native/ "\
+"&& cp -a apache-tomcat-$TOMCAT_VERSION/* / "\
+"&& cp -a apache-tomcat-$TOMCAT_VERSION/* /finalfs/ "\
 "&& cd tomcat-native "\
 "&& tar -xf tomcat-native.tar.gz --strip-components=1 "\
 "&& cd native "\
 '&& export CATALINA_HOME=$PWD '\
 '&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" '\
-'&& ./configure
-'&& gzfiles="$(ls *.gz | grep -ve "-doc[.]gz$" | grep -ve "-dev[.]gz$" | xargs)" '\
-'&& echo "$gzfiles" '\
-'&& content="$(zcat $gzfiles | sort -u - | xargs)" '\
-'&& for file in $content; '\
-'   do '\
-'      if [ ! -e "/finalfs$file" ] || [ -f "/finalfs$file" ]; '\
-'      then '\
-'         cp -a "$file" "/finalfs$file"; '\
-'      fi; '\
-'   done'
-ARG FINALCMDS=\
-"   rm -rf $CONTENTSOURCE1/webapps/examples $CONTENTSOURCE1/webapps/docs "\
-"&& find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash\$|#!/usr/local/bin/dash|' '{}' \; "\
-"&& find '$CONTENTSOURCE1/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash\$|#!/usr/local/bin/dash|' '{}' \; "\
-"&& find '$CONTENTSOURCE1' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
-"&& cd /usr/local/lib "\
-'&& ln -s ../../lib/jvm/java-1.8-openjdk/jre/lib/* ../../share/java/*.jar ./ '\
-'&& cd /usr/lib '\
-'&& ln -s ../local/tomcat/native-jni-lib/* ./ '\
-'&& cd /var/log '\
-"&& ln -s ../..$CONTENTSOURCE1/logs tomcat "\
-"&& sed -i 's/autoDeploy=\"true\"/autoDeploy=\"true\" deployIgnore=\".snapshot\"/' $CONTENTSOURCE1/conf/server.xml "\
-"&& mv $CONTENTSOURCE1/webapps /webapps-nobind"
-ARG GID0WRITABLES="$CONTENTSOURCE1"
-ARG GID0WRITABLESRECURSIVE="/webapps-nobind $CONTENTSOURCE1/work $CONTENTSOURCE1/logs $CONTENTSOURCE1/conf"
-ARG STARTUPEXECUTABLES="$CONTENTSOURCE1/bin/catalina.sh /usr/lib/jvm/java-1.8-openjdk/jre/bin/java"
-ARG REMOVEDIRS="$CONTENTSOURCE1/include $CONTENTSOURCE1/temp"
-ARG REMOVEFILES="$CONTENTSOURCE1/bin/commons-daemon*"
+'&& ./configure --build="$gnuArch" --libdir="$TOMCAT_NATIVE_LIBDIR" --prefix="$CATALINA_HOME" --with-apr="$(which apr-1-config)" --with-ssl=yes '\
+'&& eval "$COMMON_MAKECMDS" '\
+"&& scanelf --needed --nobanner --format '%n#p' --recursive $TOMCAT_NATIVE_LIBDIR | tr ',' '\n' | sort -u | awk 'system(\"[ -e /usr/local/lib/\" \$1 \" ]\") == 0 { next } { print \"so:\" \$1 }'"
+ARG REMOVEFILES="/bin/*.bat"
 # ARGs (can be passed to Build/Final) </END>
 
 # Generic template (don't edit) <BEGIN>
@@ -82,11 +60,11 @@ COPY --from=build /finalfs /
 # Final
 # =========================================================================
 # ARGs passed from Init <BEGIN>
-ARG CONTENTSOURCE1
+ARG CATALINA_HOME
 # ARGs passed from Init </END>
 
 ENV VAR_LINUX_USER="tomcat" \
-    VAR_FINAL_COMMAND="JRE_HOME=\"/usr/local\" CATALINA_HOME=\"$CONTENTSOURCE1\" CATALINA_TMPDIR=\"\$VAR_TEMP_DIR\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" /usr/local/bin/catalina.sh run" \
+    VAR_FINAL_COMMAND="JRE_HOME=\"/usr/local\" CATALINA_HOME=\"$CATALINA_HOME\" CATALINA_TMPDIR=\"\$VAR_TEMP_DIR\" CATALINA_OPTS=\"\$VAR_CATALINA_OPTS\" JAVA_MAJOR=8 TOMCAT_MAJOR=9 CATALINA_OUT=\"\$VAR_CATALINA_OUT\" /usr/local/bin/catalina.sh run" \
     VAR_CONFIG_DIR="/etc/tomcat" \
     VAR_PREFS_DIR="\$VAR_CONFIG_DIR/prefs" \
     VAR_WEBAPPS_DIR="" \
