@@ -32,7 +32,7 @@ ARG BUILDCMDS=\
 "&& cd native "\
 '&& export CATALINA_HOME=$PWD '\
 '&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" '\
-'&& ./configure --build="$gnuArch" --libdir="'$TOMCAT_NATIVE_LIBDIR'" --prefix="/usr" --with-apr="$(which apr-1-config)" --with-java-home="/usr/lib/jvm/default-jvm" --with-ssl=yes '\
+'&& ./configure --build="$gnuArch" --libdir="'$TOMCAT_NATIVE_LIBDIR'" --prefix="'$CATALINA_HOME'" --with-apr="$(which apr-1-config)" --with-java-home="/usr/lib/jvm/default-jvm" --with-ssl=yes '\
 '&& eval "$COMMON_MAKECMDS" '\
 "&& scanelf --needed --nobanner --format '%n#p' --recursive $TOMCAT_NATIVE_LIBDIR | tr ',' '\n' | sort -u | awk 'system(\"[ -e /usr/local/lib/\" \$1 \" ]\") == 0 { next } { print \"so:\" \$1 }'"
 ARG REMOVEFILES="/bin/*.bat"
