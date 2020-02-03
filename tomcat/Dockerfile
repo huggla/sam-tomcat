@@ -1,21 +1,25 @@
+# Secure and Minimal image of Hajk
+# https://hub.docker.com/repository/docker/huggla/sam-hajk
+
 # =========================================================================
 # Init
 # =========================================================================
 # ARGs (can be passed to Build/Final) <BEGIN>
-ARG SaM_VERSION="1.1-edge"
-ARG TAG="20191112"
+ARG SaM_VERSION="dev"
 ARG IMAGETYPE="application,base"
-ARG CONTENTIMAGE1="tomcat:9-jre8-alpine"
-ARG CONTENTSOURCE1="/usr/local/tomcat"
-ARG CONTENTDESTINATION1="/finalfs$CONTENTSOURCE1"
+ARG TOMCAT_MAJOR_VERSION="9"
+ARG TOMCAT_MINOR_VERSION="0.30"
+ARG TOMCAT_VERSION="$TOMCAT_MAJOR_VERSION.$TOMCAT_MINOR_VERSION"
 ARG LIBJPEGTURBO_VERSION="2.0.3"
+ARG CATALINA_HOME="/usr/local/tomcat"
 ARG CONTENTIMAGE2="huggla/content-alpine:libjpegturbo_$LIBJPEGTURBO_VERSION-$TAG"
 ARG CONTENTSOURCE2="/content-*"
 ARG CONTENTDESTINATION2="/"
 ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG INITCMDS='sed -i "/^\/usr\/lib\/libturbojpeg[.]so.*>libturbojpeg/d" /tmp/onbuild/exclude.filelist'
-ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CONTENTSOURCE1/conf/Catalina /tmp/tomcat $CONTENTSOURCE1/logs $CONTENTSOURCE1/work/Catalina/localhost"
-ARG RUNDEPS="openjdk8-jre-base apr nss"
+ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CATALINA_HOME/conf/Catalina /tmp/tomcat $CATALINA_HOME/logs $CATALINA_HOME/work/Catalina/localhost"
+ARG RUNDEPS="openjdk11-jre-headless apr nss"
+ARG DOWNLOADS="https://apache.mirrors.spacedump.net/tomcat/tomcat-$TOMCAT_MAJOR_VERSION/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz"
 ARG BUILDCMDS=\
 '   cd / '\
 '&& gzfiles="$(ls *.gz | grep -ve "-doc[.]gz$" | grep -ve "-dev[.]gz$" | xargs)" '\
