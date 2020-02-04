@@ -40,7 +40,6 @@ ARG FINALCMDS=\
 "&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash\$|#!/usr/local/bin/dash|' '{}' \; "\
 "&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash\$|#!/usr/local/bin/dash|' '{}' \; "\
 "&& find '$CATALINA_HOME' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
-"&& ln -s $CATALINA_HOME/bin/*.sh /usr/local/bin/ "\
 "&& cd /usr/local/lib "\
 '&& ln -s ../../lib/jvm/java-11-openjdk/lib/* ../../share/java/*.jar ./ '\
 '&& cd /usr/lib '\
