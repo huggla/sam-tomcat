@@ -47,25 +47,10 @@ ARG FINALCMDS=\
 '&& cd /var/log '\
 "&& ln -s ../..$CATALINA_HOME/logs tomcat "\
 "&& sed -i 's/autoDeploy=\"true\"/autoDeploy=\"true\" deployIgnore=\".snapshot\"/' $CATALINA_HOME/conf/server.xml "\
-"&& mv $CATALINA_HOME/webapps /webapps-nobind "\
-"&& cd /usr/lib/jvm/java-11-openjdk/jre/bin "\
-"&& ls -la "\
-"&& pwd "\
-"&& ls -la .. "\
-"&& ls -la ../.. "\
-"&& ls -la ../../.. "\
-"&& ls -la ../../../.. "\
-"&& ls -la ../../../../.. "\
-"&& touch ../../../../../apa "\
-"&& ls -la ../../../../.. "\
-"&& cp -a java ../../../../../local/bin/ "\
-"&& cd ../../../../../local/bin "\
-"&& ls -la "\
-"&& pwd "\
-"&& exit 1"
+"&& mv $CATALINA_HOME/webapps /webapps-nobind"
 ARG GID0WRITABLES="$CATALINA_HOME"
 ARG GID0WRITABLESRECURSIVE="/webapps-nobind $CATALINA_HOME/work $CATALINA_HOME/logs $CATALINA_HOME/conf"
-ARG STARTUPEXECUTABLES="$CATALINA_HOME/bin/catalina.sh /usr/lib/jvm/java-11-openjdk/jre/bin/java"
+ARG STARTUPEXECUTABLES="$CATALINA_HOME/bin/catalina.sh /usr/lib/jvm/java-11-openjdk/bin/java"
 ARG REMOVEDIRS="$CATALINA_HOME/include $CATALINA_HOME/temp"
 ARG REMOVEFILES="$CATALINA_HOME/bin/commons-daemon* $CATALINA_HOME/bin/*.bat"
 # ARGs (can be passed to Build/Final) </END>
