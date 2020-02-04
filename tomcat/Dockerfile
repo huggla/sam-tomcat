@@ -50,7 +50,7 @@ ARG FINALCMDS=\
 "&& mv $CATALINA_HOME/webapps /webapps-nobind"
 ARG GID0WRITABLES="$CATALINA_HOME"
 ARG GID0WRITABLESRECURSIVE="/webapps-nobind $CATALINA_HOME/work $CATALINA_HOME/logs $CATALINA_HOME/conf"
-ARG STARTUPEXECUTABLES="$CATALINA_HOME/bin/catalina.sh"
+ARG STARTUPEXECUTABLES="$CATALINA_HOME/bin/catalina.sh /usr/lib/jvm/java-11-openjdk/jre/bin/java"
 ARG REMOVEDIRS="$CATALINA_HOME/include $CATALINA_HOME/temp"
 ARG REMOVEFILES="$CATALINA_HOME/bin/commons-daemon* $CATALINA_HOME/bin/*.bat"
 # ARGs (can be passed to Build/Final) </END>
