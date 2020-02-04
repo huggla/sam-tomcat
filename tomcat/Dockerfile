@@ -21,7 +21,7 @@ ARG INITCMDS='sed -i "/^\/usr\/lib\/libturbojpeg[.]so.*>libturbojpeg/d" /tmp/onb
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CATALINA_HOME/conf/Catalina /tmp/tomcat $CATALINA_HOME/logs $CATALINA_HOME/work/Catalina/localhost"
 ARG RUNDEPS="openjdk11-jre-headless apr nss"
 ARG DOWNLOADS="http://apache.mirrors.spacedump.net/tomcat/tomcat-$TOMCAT_MAJOR_VERSION/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz"
-ARG BUILDDEPS="apr-dev coreutils dpkg-dev dpkg libc-dev openjdk11 openssl-dev"
+ARG BUILDDEPS="apr-dev coreutils dpkg-dev dpkg libc-dev openjdk11 libressl-dev"
 ARG BUILDCMDS=\
 "   mkdir tomcat-native "\
 "&& mv apache-tomcat-$TOMCAT_VERSION/bin/tomcat-native.tar.gz tomcat-native/ "\
@@ -40,6 +40,7 @@ ARG FINALCMDS=\
 "&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash\$|#!/usr/local/bin/dash|' '{}' \; "\
 "&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash\$|#!/usr/local/bin/dash|' '{}' \; "\
 "&& find '$CATALINA_HOME' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
+"&& ln -s $CATALINA_HOME/bin/*.sh /usr/local/bin/ "\
 "&& cd /usr/local/lib "\
 '&& ln -s ../../lib/jvm/java-11-openjdk/lib/* ../../share/java/*.jar ./ '\
 '&& cd /usr/lib '\
