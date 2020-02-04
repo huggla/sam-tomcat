@@ -1,4 +1,4 @@
-# sam-alpine
+# sam-tomcat
 Secure and Minimal Tomcat Docker-image. VAR_WEBAPPS_DIR needs to be set if you want to bind mount the webapps-directory.
 
 ## Environment variables
