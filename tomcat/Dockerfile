@@ -51,9 +51,13 @@ ARG FINALCMDS=\
 "&& cd /usr/lib/jvm/java-11-openjdk/jre/bin "\
 "&& ls -la "\
 "&& pwd "\
-"&& ls -la ../../../../../ "\
-"&& touch ../../../../../local/bin/apa "\
-"&& ls -la ../../../../../local/bin/apa "\
+"&& ls -la .. "\
+"&& ls -la ../.. "\
+"&& ls -la ../../.. "\
+"&& ls -la ../../../.. "\
+"&& ls -la ../../../../.. "\
+"&& touch ../../../../../apa "\
+"&& ls -la ../../../../.. "\
 "&& cp -a java ../../../../../local/bin/ "\
 "&& cd ../../../../../local/bin "\
 "&& ls -la "\
