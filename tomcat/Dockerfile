@@ -52,9 +52,10 @@ ARG FINALCMDS=\
 "&& ls -la "\
 "&& pwd "\
 "&& ls -la ../../../../../ "\
-"&& cd ../../../../../local "\
+"&& cd ../../../../../local/bin "\
 "&& ls -la "\
-"&& pwd"
+"&& pwd "\
+"&& cp -a /usr/lib/jvm/java-11-openjdk/jre/bin/java ./"
 ARG GID0WRITABLES="$CATALINA_HOME"
 ARG GID0WRITABLESRECURSIVE="/webapps-nobind $CATALINA_HOME/work $CATALINA_HOME/logs $CATALINA_HOME/conf"
 ARG STARTUPEXECUTABLES="$CATALINA_HOME/bin/catalina.sh /usr/lib/jvm/java-11-openjdk/jre/bin/java"
