@@ -48,7 +48,7 @@ ARG FINALCMDS=\
 "&& ln -s ../..$CATALINA_HOME/logs tomcat "\
 "&& sed -i 's/autoDeploy=\"true\"/autoDeploy=\"true\" deployIgnore=\".snapshot\"/' $CATALINA_HOME/conf/server.xml "\
 "&& mv $CATALINA_HOME/webapps /webapps-nobind "\
-"&& cd /finalfs/usr/lib/jvm/java-11-openjdk/jre/bin "\
+"&& cd /usr/lib/jvm/java-11-openjdk/jre/bin "\
 "&& ls -la "\
 "&& pwd "\
 "&& ls -la ../../../../../local/bin "\
