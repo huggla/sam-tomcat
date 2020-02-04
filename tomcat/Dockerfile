@@ -1,5 +1,5 @@
-# Secure and Minimal image of Hajk
-# https://hub.docker.com/repository/docker/huggla/sam-hajk
+# Secure and Minimal image of Tomcat
+# https://hub.docker.com/repository/docker/huggla/sam-tomcat
 
 # =========================================================================
 # Init
