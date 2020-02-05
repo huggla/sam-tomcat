@@ -21,8 +21,7 @@ ARG INITCMDS='sed -i "/^\/usr\/lib\/libturbojpeg[.]so.*>libturbojpeg/d" /tmp/onb
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CATALINA_HOME/conf/Catalina /tmp/tomcat $CATALINA_HOME/logs $CATALINA_HOME/work/Catalina/localhost"
 ARG RUNDEPS="openjdk11-jre-headless apr nss tomcat-native"
 ARG DOWNLOADS="http://apache.mirrors.spacedump.net/tomcat/tomcat-$TOMCAT_MAJOR_VERSION/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz"
-ARG BUILDCMDS=\
-"   cp -a apache-tomcat-$TOMCAT_VERSION/* /finalfs$CATALINA_HOME"\
+ARG BUILDCMDS="cp -a apache-tomcat-$TOMCAT_VERSION/* /finalfs$CATALINA_HOME"
 ARG FINALCMDS=\
 "   rm -rf $CATALINA_HOME/webapps/examples $CATALINA_HOME/webapps/docs "\
 "&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash\$|#!/usr/local/bin/dash|' '{}' \; "\
