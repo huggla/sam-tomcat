@@ -30,7 +30,6 @@ ARG BUILDCMDS=\
 "&& cd tomcat-native "\
 "&& tar -xf tomcat-native.tar.gz --strip-components=1 "\
 "&& cd native "\
-'&& export CATALINA_HOME=$PWD '\
 '&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" '\
 '&& ./configure --build="$gnuArch" --libdir="'$TOMCAT_NATIVE_LIBDIR'" --prefix="'$CATALINA_HOME'" --with-apr="$(which apr-1-config)" --with-java-home="/usr/lib/jvm/default-jvm" --with-ssl=yes '\
 '&& eval "$COMMON_MAKECMDS" '\
