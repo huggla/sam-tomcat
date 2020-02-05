@@ -19,21 +19,10 @@ ARG CONTENTDESTINATION2="/"
 ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG INITCMDS='sed -i "/^\/usr\/lib\/libturbojpeg[.]so.*>libturbojpeg/d" /tmp/onbuild/exclude.filelist'
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CATALINA_HOME/conf/Catalina /tmp/tomcat $CATALINA_HOME/logs $CATALINA_HOME/work/Catalina/localhost"
-ARG RUNDEPS="openjdk11-jre-headless apr nss libressl3.0-libssl"
+ARG RUNDEPS="openjdk11-jre-headless apr nss tomcat-native"
 ARG DOWNLOADS="http://apache.mirrors.spacedump.net/tomcat/tomcat-$TOMCAT_MAJOR_VERSION/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz"
-ARG BUILDDEPS="apr-dev coreutils dpkg-dev dpkg libc-dev openjdk11 libressl-dev"
 ARG BUILDCMDS=\
-"   mkdir tomcat-native "\
-"&& mv apache-tomcat-$TOMCAT_VERSION/bin/tomcat-native.tar.gz tomcat-native/ "\
-"&& cp -a apache-tomcat-$TOMCAT_VERSION/* / "\
-"&& cp -a apache-tomcat-$TOMCAT_VERSION/* /finalfs$CATALINA_HOME "\
-"&& cd tomcat-native "\
-"&& tar -xf tomcat-native.tar.gz --strip-components=1 "\
-"&& cd native "\
-'&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" '\
-'&& ./configure --build="$gnuArch" --libdir="'$TOMCAT_NATIVE_LIBDIR'" --prefix="'$CATALINA_HOME'" --with-apr="$(which apr-1-config)" --with-java-home="/usr/lib/jvm/default-jvm" --with-ssl=yes '\
-'&& eval "$COMMON_MAKECMDS" '\
-"&& scanelf --needed --nobanner --format '%n#p' --recursive $TOMCAT_NATIVE_LIBDIR | tr ',' '\n' | sort -u | awk 'system(\"[ -e /usr/local/lib/\" \$1 \" ]\") == 0 { next } { print \"so:\" \$1 }'"
+"   cp -a apache-tomcat-$TOMCAT_VERSION/* /finalfs$CATALINA_HOME"\
 ARG FINALCMDS=\
 "   rm -rf $CATALINA_HOME/webapps/examples $CATALINA_HOME/webapps/docs "\
 "&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash\$|#!/usr/local/bin/dash|' '{}' \; "\
@@ -41,8 +30,6 @@ ARG FINALCMDS=\
 "&& find '$CATALINA_HOME' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
 "&& cd /usr/local/lib "\
 '&& ln -s ../../lib/jvm/java-11-openjdk/lib/* ../../share/java/*.jar ./ '\
-'&& cd /usr/lib '\
-'&& ln -s ../local/tomcat/native-jni-lib/* ./ '\
 '&& cd /var/log '\
 "&& ln -s ../..$CATALINA_HOME/logs tomcat "\
 "&& sed -i 's/autoDeploy=\"true\"/autoDeploy=\"true\" deployIgnore=\".snapshot\"/' $CATALINA_HOME/conf/server.xml "\
@@ -51,7 +38,7 @@ ARG GID0WRITABLES="$CATALINA_HOME"
 ARG GID0WRITABLESRECURSIVE="/webapps-nobind $CATALINA_HOME/work $CATALINA_HOME/logs $CATALINA_HOME/conf"
 ARG STARTUPEXECUTABLES="$CATALINA_HOME/bin/catalina.sh /usr/lib/jvm/java-11-openjdk/bin/java"
 ARG REMOVEDIRS="$CATALINA_HOME/include $CATALINA_HOME/temp"
-ARG REMOVEFILES="$CATALINA_HOME/bin/commons-daemon* $CATALINA_HOME/bin/*.bat"
+ARG REMOVEFILES="$CATALINA_HOME/bin/tomcat-native.tar.gz $CATALINA_HOME/bin/commons-daemon* $CATALINA_HOME/bin/*.bat"
 # ARGs (can be passed to Build/Final) </END>
 
 # Generic template (don't edit) <BEGIN>
