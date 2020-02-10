@@ -10,14 +10,14 @@ ARG IMAGETYPE="application"
 ARG TOMCAT_VERSION="9.0.20"
 ARG EPANET_VERSION="2.00.12"
 ARG SWMM_VERSION="5.1.013"
-ARG CONTENTIMAGE1="huggla/content-alpine:epanet_$EPANET_VERSION-$TAG"
+ARG CONTENTIMAGE1="huggla/sam-content:epanet-$EPANET_VERSION"
 ARG CONTENTSOURCE1="/content-*"
 ARG CONTENTDESTINATION1="/"
-ARG CONTENTIMAGE2="huggla/content-alpine:swmm_$SWMM_VERSION-$TAG"
+ARG CONTENTIMAGE2="huggla/sam-content:swmm-$SWMM_VERSION"
 ARG CONTENTSOURCE2="/content-*"
 ARG CONTENTDESTINATION2="/"
 ARG MAKEDIRS="/usr/local/tomcat/work/epanet /usr/local/tomcat/work/swmm"
-ARG BASEIMAGE="huggla/tomcat-alpine:$TOMCAT_VERSION-$TAG"
+ARG BASEIMAGE="huggla/sam-tomcat:$TOMCAT_VERSION"
 ARG EXECUTABLES="/usr/bin/epanet2 /usr/bin/swmm5"
 ARG BUILDCMDS=\
 '   cd / '\
@@ -39,15 +39,15 @@ FROM ${CONTENTIMAGE2:-scratch} as content2
 FROM ${CONTENTIMAGE3:-scratch} as content3
 FROM ${CONTENTIMAGE4:-scratch} as content4
 FROM ${CONTENTIMAGE5:-scratch} as content5
-FROM ${INITIMAGE:-${BASEIMAGE:-huggla/sam_$SaM_VERSION:base-$TAG}} as init
+FROM ${INITIMAGE:-${BASEIMAGE:-huggla/secure_and_minimal:$SaM_VERSION-base}} as init
 # Generic template (don't edit) </END>
 
 # =========================================================================
 # Build
 # =========================================================================
 # Generic template (don't edit) <BEGIN>
-FROM ${BUILDIMAGE:-huggla/sam_$SaM_VERSION:build-$TAG} as build
-FROM ${BASEIMAGE:-huggla/sam_$SaM_VERSION:base-$TAG} as final
+FROM ${BUILDIMAGE:-huggla/secure_and_minimal:$SaM_VERSION-build} as build
+FROM ${BASEIMAGE:-huggla/secure_and_minimal:$SaM_VERSION-base} as final
 COPY --from=build /finalfs /
 # Generic template (don't edit) </END>
 
