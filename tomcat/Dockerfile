@@ -24,8 +24,9 @@ ARG DOWNLOADS="http://apache.mirrors.spacedump.net/tomcat/tomcat-$TOMCAT_MAJOR_V
 ARG BUILDCMDS="cp -a apache-tomcat-$TOMCAT_VERSION/* /finalfs$CATALINA_HOME"
 ARG FINALCMDS=\
 "   rm -rf $CATALINA_HOME/webapps/examples $CATALINA_HOME/webapps/docs "\
-"&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash\$|#!/usr/local/bin/dash -x|' '{}' \; "\
-"&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash\$|#!/usr/local/bin/dash -x|' '{}' \; "\
+"&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/sh\$|#!/usr/local/bin/dash|' '{}' \; "\
+"&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/bin/bash\$|#!/usr/local/bin/dash|' '{}' \; "\
+"&& find '$CATALINA_HOME/bin' -name '*.sh' -exec sed -ri 's|^#!/usr/bin/env bash\$|#!/usr/local/bin/dash|' '{}' \; "\
 "&& find '$CATALINA_HOME' ! -name LICENSE ! -type d -maxdepth 1 -delete "\
 "&& cd /usr/local/lib "\
 '&& ln -s ../../lib/jvm/java-11-openjdk/lib/* ../../share/java/*.jar ./ '\
@@ -35,7 +36,7 @@ ARG FINALCMDS=\
 "&& mv $CATALINA_HOME/webapps /webapps-nobind"
 ARG GID0WRITABLES="$CATALINA_HOME"
 ARG GID0WRITABLESRECURSIVE="/webapps-nobind $CATALINA_HOME/work $CATALINA_HOME/logs $CATALINA_HOME/conf"
-ARG EXECUTABLES="$CATALINA_HOME/bin/catalina.sh /usr/lib/jvm/java-11-openjdk/bin/java"
+ARG STARTUPEXECUTABLES="$CATALINA_HOME/bin/catalina.sh /usr/lib/jvm/java-11-openjdk/bin/java"
 ARG REMOVEDIRS="$CATALINA_HOME/include $CATALINA_HOME/temp"
 ARG REMOVEFILES="$CATALINA_HOME/bin/tomcat-native.tar.gz $CATALINA_HOME/bin/commons-daemon* $CATALINA_HOME/bin/*.bat"
 # ARGs (can be passed to Build/Final) </END>
