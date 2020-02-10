@@ -1,2 +1,2 @@
-# tomcat-alpine:epanet-swmm
-huggla/tomcat-alpine with Epanet and Swmm added.
+# sam-tomcat:epanet-swmm
+Secure and Minimal Tomcat Docker image, with Epanet and Swmm added.
