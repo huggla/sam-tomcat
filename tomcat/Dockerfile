@@ -5,7 +5,7 @@
 # Init
 # =========================================================================
 # ARGs (can be passed to Build/Final) <BEGIN>
-ARG SaM_VERSION="dev"
+ARG SaM_VERSION="2.0.0"
 ARG IMAGETYPE="application,base"
 ARG TOMCAT_MAJOR_VERSION="9"
 ARG TOMCAT_MINOR_VERSION="0.30"
