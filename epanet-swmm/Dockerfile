@@ -1,9 +1,11 @@
+# Secure and Minimal image of Tomcat, Epanet-Swmm.
+# https://hub.docker.com/repository/docker/huggla/sam-tomcat
+
 # =========================================================================
 # Init
 # =========================================================================
 # ARGs (can be passed to Build/Final) <BEGIN>
-ARG SaM_VERSION="1.1-edge"
-ARG TAG="20191112"
+ARG SaM_VERSION="2.0.0"
 ARG IMAGETYPE="application"
 ARG TOMCAT_VERSION="9.0.20"
 ARG EPANET_VERSION="2.00.12"
