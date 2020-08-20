@@ -16,6 +16,7 @@ ARG TOMCAT_NATIVE_LIBDIR="$CATALINA_HOME/native-jni-lib"
 ARG CONTENTIMAGE2="huggla/sam-content:libjpegturbo-$LIBJPEGTURBO_VERSION"
 ARG CONTENTSOURCE2="/content-*"
 ARG CONTENTDESTINATION2="/"
+ARG ADDREPOS="http://dl-cdn.alpinelinux.org/alpine/edge/testing"
 ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG INITCMDS='sed -i "/^\/usr\/lib\/libturbojpeg[.]so.*>libturbojpeg/d" /tmp/onbuild/exclude.filelist'
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CATALINA_HOME/conf/Catalina /tmp/tomcat $CATALINA_HOME/logs $CATALINA_HOME/work/Catalina/localhost"
