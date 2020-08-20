@@ -5,7 +5,7 @@
 # Init
 # =========================================================================
 # ARGs (can be passed to Build/Final) <BEGIN>
-ARG SaM_VERSION="2.0.0"
+ARG SaM_VERSION="2.0.4"
 ARG IMAGETYPE="application,base"
 ARG TOMCAT_MAJOR_VERSION="9"
 ARG TOMCAT_MINOR_VERSION="0.30"
@@ -19,7 +19,7 @@ ARG CONTENTDESTINATION2="/"
 ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG INITCMDS='sed -i "/^\/usr\/lib\/libturbojpeg[.]so.*>libturbojpeg/d" /tmp/onbuild/exclude.filelist'
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CATALINA_HOME/conf/Catalina /tmp/tomcat $CATALINA_HOME/logs $CATALINA_HOME/work/Catalina/localhost"
-ARG RUNDEPS="openjdk11-jre-headless apr nss tomcat-native"
+ARG RUNDEPS="openjdk11-jre-headless apr nss tomcat-native fontconfig"
 ARG DOWNLOADS="http://apache.mirrors.spacedump.net/tomcat/tomcat-$TOMCAT_MAJOR_VERSION/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz"
 ARG BUILDCMDS="cp -a apache-tomcat-$TOMCAT_VERSION/* /finalfs$CATALINA_HOME"
 ARG FINALCMDS=\
