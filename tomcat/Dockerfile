@@ -5,12 +5,12 @@
 # Init
 # =========================================================================
 # ARGs (can be passed to Build/Final) <BEGIN>
-ARG SaM_VERSION="2.0.5"
+ARG SaM_VERSION="2.0.6-3.16"
 ARG IMAGETYPE="application,base"
 ARG TOMCAT_MAJOR_VERSION="8"
 ARG TOMCAT_MINOR_VERSION="0.53"
 ARG TOMCAT_VERSION="$TOMCAT_MAJOR_VERSION.$TOMCAT_MINOR_VERSION"
-ARG LIBJPEGTURBO_VERSION="2.0.6"
+ARG LIBJPEGTURBO_VERSION="2.1.4"
 ARG CATALINA_HOME="/usr/local/tomcat"
 ARG TOMCAT_NATIVE_LIBDIR="$CATALINA_HOME/native-jni-lib"
 ARG CONTENTIMAGE2="huggla/sam-content:libjpegturbo-$LIBJPEGTURBO_VERSION"
@@ -48,7 +48,8 @@ FROM ${CONTENTIMAGE2:-scratch} as content2
 FROM ${CONTENTIMAGE3:-scratch} as content3
 FROM ${CONTENTIMAGE4:-scratch} as content4
 FROM ${CONTENTIMAGE5:-scratch} as content5
-FROM ${INITIMAGE:-${BASEIMAGE:-huggla/secure_and_minimal:$SaM_VERSION-base}} as init
+FROM ${BASEIMAGE:-huggla/secure_and_minimal:$SaM_VERSION-base} as base
+FROM ${INITIMAGE:-scratch} as init
 # Generic template (don't edit) </END>
 
 # =========================================================================
