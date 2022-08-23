@@ -65,6 +65,7 @@ COPY --from=build /finalfs /
 # =========================================================================
 # ARGs passed from Init <BEGIN>
 ARG CATALINA_HOME
+ARG TOMCAT_MAJOR_VERSION
 # ARGs passed from Init </END>
 
 ENV VAR_LINUX_USER="tomcat" \
