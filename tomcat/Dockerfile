@@ -36,7 +36,7 @@ ARG FINALCMDS=\
 "&& chmod -R g+rwX $CATALINA_HOME/conf "\
 "&& mv $CATALINA_HOME/webapps /webapps-nobind "\
 # sed-command needed for older docker versions
-"&& sed -i 's/if\ \[\ -r/if [ -e/g' /usr/local/bin/catalina.sh"
+"&& sed -i 's/if\ \[\ -r/if [ -e/g' $CATALINA_HOME/bin/catalina.sh"
 ARG GID0WRITABLES="$CATALINA_HOME"
 ARG GID0WRITABLESRECURSIVE="/webapps-nobind $CATALINA_HOME/work $CATALINA_HOME/logs $CATALINA_HOME/conf"
 ARG STARTUPEXECUTABLES="$CATALINA_HOME/bin/catalina.sh /usr/lib/jvm/java-11-openjdk/bin/java"
