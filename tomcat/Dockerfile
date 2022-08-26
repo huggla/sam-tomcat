@@ -20,7 +20,7 @@ ARG EXCLUDEAPKS="libjpeg-turbo"
 ARG INITCMDS='sed -i "/^\/usr\/lib\/libturbojpeg[.]so.*>libturbojpeg/d" /tmp/onbuild/exclude.filelist'
 ARG MAKEDIRS="/usr/lib/ /usr/local/lib $CATALINA_HOME/conf/Catalina /tmp/tomcat $CATALINA_HOME/logs $CATALINA_HOME/work/Catalina/localhost"
 ARG RUNDEPS="openjdk11-jre apr nss tomcat-native ttf-font-awesome"
-ARG DOWNLOADS="http://apache.mirrors.spacedump.net/tomcat/tomcat-$TOMCAT_MAJOR_VERSION/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz"
+ARG DOWNLOADS="https://archive.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR_VERSION/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz"
 ARG BUILDCMDS="cp -a apache-tomcat-$TOMCAT_VERSION/* /finalfs$CATALINA_HOME"
 ARG FINALCMDS=\
 "   rm -rf $CATALINA_HOME/webapps/examples $CATALINA_HOME/webapps/docs "\
